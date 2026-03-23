@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, Mail, MapPin, Shield, Cloud, Server, FileText, Github, Linkedin } from "lucide-react";
 
