@@ -447,17 +447,14 @@ function ResumePage() {
         <Card>
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="font-serif text-3xl text-white">Downloadable Resume</h3>
+              <h3 className="font-serif text-3xl text-white">Resume Access</h3>
               <p className="mt-3 text-lg leading-8 text-slate-300">
-                Replace the placeholder link in the code with your PDF if you want a direct download button here.
+                I do not provide a public resume download on this site. I’m happy to walk through experience, projects, and technical decisions during an interview.
               </p>
             </div>
-            <a
-              href={profile.resumePdf}
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-emerald-200"
-            >
-              Download PDF <ExternalLink size={18} />
-            </a>
+            <div className="rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-slate-200">
+              Shared on request
+            </div>
           </div>
         </Card>
       </section>
