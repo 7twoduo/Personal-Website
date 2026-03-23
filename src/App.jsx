@@ -120,7 +120,7 @@ function Shell({ children }) {
     <div className="min-h-screen bg-[#04101f] text-slate-200">
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(23,66,112,0.35),_transparent_35%),linear-gradient(90deg,rgba(22,57,97,0.22)_0%,rgba(5,16,31,0.0)_12%,rgba(22,57,97,0.15)_24%,rgba(5,16,31,0.0)_36%,rgba(22,57,97,0.12)_48%,rgba(5,16,31,0.0)_60%,rgba(22,57,97,0.16)_72%,rgba(5,16,31,0.0)_84%,rgba(22,57,97,0.22)_100%)]" />
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#03111f]/85 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+        <div className="mx-auto flex max-w-[1520px] items-center justify-between px-6 py-5 lg:px-10">
           <NavLink to="/" className="text-sm font-semibold tracking-[0.28em] text-slate-100">
             {profile.shortName}
           </NavLink>
@@ -150,9 +150,9 @@ function Shell({ children }) {
 
 function PageIntro({ eyebrow, title, description }) {
   return (
-    <div className="mx-auto max-w-7xl px-6 pt-14 lg:px-10 lg:pt-20">
+    <div className="mx-auto max-w-[1520px] px-6 pt-14 lg:px-10 lg:pt-20">
       <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">{eyebrow}</p>
-      <h1 className="max-w-5xl font-serif text-4xl leading-tight text-white md:text-6xl">{title}</h1>
+      <h1 className="max-w-6xl font-serif text-4xl leading-tight text-white md:text-6xl">{title}</h1>
       <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{description}</p>
     </div>
   );
@@ -165,13 +165,13 @@ function Card({ children, className = "" }) {
 function HomePage() {
   return (
     <div>
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[1.15fr_0.85fr] lg:px-10 lg:py-20">
+      <section className="mx-auto grid max-w-[1520px] gap-10 px-8 py-14 lg:grid-cols-[1.2fr_0.8fr] lg:px-14 lg:py-20">
         <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <p className="mb-5 text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">Cloud Infrastructure • DevSecOps • Cloud Security</p>
-          <h1 className="max-w-4xl font-serif text-5xl leading-[1.02] text-white md:text-7xl">
+          <h1 className="max-w-5xl font-serif text-5xl leading-[1.02] text-white md:text-7xl xl:text-[6.4rem]">
             {profile.name} builds cloud systems that are designed to be secure, scalable, and hard to break.
           </h1>
-          <p className="mt-8 max-w-3xl text-xl leading-9 text-slate-300">{profile.subtitle}</p>
+          <p className="mt-8 max-w-4xl text-xl leading-9 text-slate-300 md:text-[1.45rem]">{profile.subtitle}</p>
           <div className="mt-10 flex flex-wrap gap-4">
             <NavLink
               to="/projects"
@@ -216,7 +216,7 @@ function HomePage() {
         </motion.div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-10 lg:pb-24">
+      <section className="mx-auto max-w-[1520px] px-6 pb-16 lg:px-10 lg:pb-24">
         <div className="grid gap-6 md:grid-cols-3">
           {[
             {
@@ -244,7 +244,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-10 lg:pb-24">
+      <section className="mx-auto max-w-[1520px] px-6 pb-16 lg:px-10 lg:pb-24">
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">Why this site</p>
         <h2 className="max-w-4xl font-serif text-4xl leading-tight text-white md:text-6xl">
           A curated technical profile, not a generic portfolio
@@ -270,7 +270,7 @@ function HomePage() {
         </Card>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-10 lg:pb-28">
+      <section className="mx-auto max-w-[1520px] px-6 pb-20 lg:px-10 lg:pb-28">
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">Flagship work</p>
         <h2 className="max-w-5xl font-serif text-4xl leading-tight text-white md:text-6xl">
           Projects that best support cloud, DevSecOps, and infrastructure positioning
@@ -320,7 +320,7 @@ function AboutPage() {
         title="Technical background shaped by infrastructure, security controls, and operational failure modes"
         description="My work centers on building cloud systems that stay reliable under pressure. I focus on infrastructure as code, secure architecture, observability, and DevSecOps practices that make systems easier to operate in the real world."
       />
-      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-12 lg:px-10 lg:py-16">
+      <section className="mx-auto grid max-w-[1520px] gap-6 px-6 py-12 lg:px-10 lg:py-16">
         <Card>
           <h2 className="font-serif text-4xl text-white">Current Positioning</h2>
           <p className="mt-6 text-lg leading-8 text-slate-300">
@@ -356,7 +356,7 @@ function ProjectsPage() {
         title="Selected infrastructure projects that show cloud architecture, security depth, and operational thinking"
         description="These projects are positioned to show how I approach real systems: networking, secure access, observability, compliance-minded logging, automation, and infrastructure design that can scale beyond a one-off build."
       />
-      <section className="mx-auto max-w-7xl space-y-8 px-6 py-12 lg:px-10 lg:py-16">
+      <section className="mx-auto max-w-[1520px] space-y-8 px-6 py-12 lg:px-10 lg:py-16">
         {projects.map((project) => (
           <Card key={project.title}>
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -403,7 +403,7 @@ function ResumePage() {
         title="Experience, credentials, and skills organized for quick technical review"
         description="This page is intentionally scannable. It favors clear evidence over a dense wall of text and gives recruiters or hiring managers a faster way to understand technical direction."
       />
-      <section className="mx-auto max-w-7xl space-y-8 px-6 py-12 lg:px-10 lg:py-16">
+      <section className="mx-auto max-w-[1520px] space-y-8 px-6 py-12 lg:px-10 lg:py-16">
         {experience.map((item) => (
           <Card key={`${item.role}-${item.company}`}>
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -473,7 +473,7 @@ function ContactPage() {
         title="Direct and low-friction contact"
         description="This site is static, so the contact setup is intentionally simple. Use direct links for email, LinkedIn, and GitHub instead of adding a backend form you do not need."
       />
-      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-12 lg:grid-cols-2 lg:px-10 lg:py-16">
+      <section className="mx-auto grid max-w-[1520px] gap-6 px-6 py-12 lg:grid-cols-2 lg:px-10 lg:py-16">
         <Card>
           <h2 className="font-serif text-4xl text-white">Primary Links</h2>
           <div className="mt-8 space-y-5 text-lg text-slate-300">
