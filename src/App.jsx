@@ -1,135 +1,238 @@
 import React from "react";
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, Mail, MapPin, Shield, Cloud, Server, FileText, Github, Linkedin } from "lucide-react";
+import {
+  Activity,
+  ArrowRight,
+  Award,
+  CheckCircle2,
+  Cloud,
+  Code2,
+  Database,
+  ExternalLink,
+  FileText,
+  Github,
+  Globe2,
+  Linkedin,
+  Lock,
+  Mail,
+  MapPin,
+  Network,
+  Server,
+  Shield,
+  Terminal,
+} from "lucide-react";
 
 const profile = {
   name: "Gavin Fogwe",
   shortName: "GAVIN FOGWE",
-  title: "Cloud / DevOps Engineer",
+  title: "Cloud Engineer • AWS Engineer • DevOps Engineer",
   subtitle:
-    "I build secure cloud infrastructure designed for scale, resilience, and real-world operations.",
+    "I build secure, observable, production-minded cloud systems with AWS, GCP, Terraform, CI/CD, and security-first infrastructure design.",
+  positioning:
+    "Cloud infrastructure builder focused on security, reliability, automation, and real business outcomes.",
   location: "United States",
   citizenship: "US Citizen",
-  email: "cerogavin@gmail.com",
-  linkedin: "https://www.linkedin.com/in/gavin-fogwe",
-  github: "https://github.com/gavinxenon0-arch",
-  resumePdf: "#",
+  email: "davekabello@gmail.com",
+  github: "https://github.com/7twoduo",
+  linkedin: "https://www.linkedin.com/in/sama-engineer",
+  website: "https://gavinfogwe.win/#/",
+};
+
+const projectLinks = {
+  p1: "https://github.com/7twoduo/Secure-Multi-Tier-AWS-Application-Platform-with-Private-Database-Connectivity",
+  p2: "https://github.com/7twoduo/Zero-Trust-Vendor-Access-Control-Plane-on-AWS",
+  p3: "https://github.com/7twoduo/Enterprise-Serverless-API-Security-Platform-on-AWS",
+  p4: "https://github.com/7twoduo/GCP-Runtime-Domain-Load-Balancer",
+  p5: "https://github.com/7twoduo/Secure-Multi-Cloud-Medical-Application-Platform-with-Japan-Resident-Database-Connectivity",
+  p6: "https://gitlab.com/7twoduo/guardian-lite",
 };
 
 const projects = [
   {
-    title: "Multi-Cloud Secure Healthcare Infrastructure",
-    blurb:
-      "Production-style healthcare infrastructure built across AWS and GCP with secure networking, observability, compliance-oriented logging, AI-assisted incident response, and domain + HTTPS provisioning through Route 53 and ACM.",
-    bullets: [
-      "Connected AWS and GCP through VPN and AWS Transit Gateway for secure cross-cloud communication.",
-      "Deployed stateless compute in AWS São Paulo and GCP Iowa with a centralized database in Japan.",
-      "Used CloudFront, WAF, origin restrictions, Secrets Manager, and Parameter Store to strengthen security.",
-      "Provisioned the Route 53 domain and created HTTPS connectivity with ACM certificates across the stack, including CloudFront-to-origin certificate handling.",
-      "Built monitoring and alerting with CloudWatch, SNS, S3 log retention, and a Kinesis pipeline prepared for SIEM integration.",
-      "Provisioned infrastructure with Terraform and standardized instance deployment with golden AMIs.",
+    id: "01",
+    tier: "AWS Production Build",
+    title: "Secure Multi-Tier AWS Application Platform",
+    subtitle: "Private database connectivity, hardened network tiers, and production-style operations.",
+    problem:
+      "Businesses need application platforms where public traffic can reach the app layer without exposing the database or weakening the network boundary.",
+    solution:
+      "Designed a multi-tier AWS environment with isolated networking, controlled ingress, private database access, monitoring, and repeatable Terraform provisioning.",
+    impact: [
+      "Demonstrates VPC design, private subnets, routing, security groups, and application-to-database isolation.",
+      "Shows infrastructure-as-code discipline with a deployment pattern that can be reviewed, repeated, and improved.",
+      "Positions the build as production-minded instead of a simple public EC2 demo.",
     ],
-    stack:
-      "AWS, GCP, Terraform, EC2, ALB, ASG, CloudFront, WAF, Transit Gateway, VPN, Route 53, ACM, CloudWatch, SNS, S3, Kinesis, Lambda",
-    repo: "https://github.com/gavinxenon0-arch/Multi-Cloud-Secure-Healthcare-Infrastructure",
+    stack: ["AWS", "Terraform", "VPC", "ALB", "EC2", "RDS", "IAM", "CloudWatch", "Security Groups"],
+    repo: projectLinks.p1,
   },
   {
-    title: "Domain Grounded AI Chat System on AWS",
-    blurb:
-      "Hallucination-resistant RAG system on AWS that uploads source documents to S3, stores embeddings in S3 Vectors, serves retrieval through Bedrock Knowledge Bases, and exposes a Lambda-powered chat API with optional CloudFront, Route 53, and ACM-based frontend hosting.",
-    bullets: [
-      "Built a full RAG pipeline using S3 document storage, S3 Vectors, Bedrock Knowledge Base, and a Lambda chat handler behind API Gateway.",
-      "Provisioned the stack with Terraform to automate document ingestion, vector indexing, Bedrock retrieval, and API deployment.",
-      "Added optional website hosting through S3 + CloudFront + Route 53 + ACM, alongside an alternate EC2 + Nginx path.",
-      "Applied security-minded design with IAM least privilege, private networking through VPC and subnets, API throttling, CloudFront Origin Access Control, and no public exposure of vector storage.",
-      "Designed the system to reduce hallucinations by grounding responses in uploaded source material instead of relying on raw model output alone.",
+    id: "02",
+    tier: "Zero Trust Access",
+    title: "Zero-Trust Vendor Access Control Plane on AWS",
+    subtitle: "Controlled third-party access without treating the network as automatically trusted.",
+    problem:
+      "Organizations need vendor access that is limited, auditable, temporary, and aligned to least privilege instead of permanent broad access.",
+    solution:
+      "Built a control-plane style access design focused on identity boundaries, conditional access, audit evidence, and reduced exposure for external operators.",
+    impact: [
+      "Highlights IAM thinking, access governance, session visibility, and operational control.",
+      "Shows how vendor workflows can be designed around traceability instead of blind trust.",
+      "Strong signal for cloud security, GRC-aware engineering, and enterprise access patterns.",
     ],
-    stack:
-      "AWS, Terraform, Amazon Bedrock, S3, S3 Vectors, Lambda, API Gateway, CloudFront, Route 53, ACM, IAM, VPC, CloudWatch",
-    repo: "https://github.com/gavinxenon0-arch/Domain-Grounded-AI-Chat-System-on-AWS",
+    stack: ["AWS", "IAM", "CloudTrail", "SSM", "Terraform", "Least Privilege", "Audit Logging"],
+    repo: projectLinks.p2,
   },
+  {
+    id: "03",
+    tier: "Serverless Security",
+    title: "Enterprise Serverless API Security Platform on AWS",
+    subtitle: "Secured API patterns with serverless compute, edge controls, logging, and throttling.",
+    problem:
+      "APIs become business-critical quickly, but weak auth, missing rate limits, and poor logging turn them into security and reliability risks.",
+    solution:
+      "Built a serverless API security platform with API Gateway, Lambda, WAF-style controls, usage limits, logging, and operational visibility.",
+    impact: [
+      "Demonstrates secure API architecture without maintaining servers.",
+      "Shows cloud-native security controls around request handling, throttling, observability, and deployment repeatability.",
+      "Useful proof for AWS, DevSecOps, and platform engineering conversations.",
+    ],
+    stack: ["AWS", "API Gateway", "Lambda", "WAF", "IAM", "CloudWatch", "Terraform", "DevSecOps"],
+    repo: projectLinks.p3,
+  },
+  {
+    id: "04",
+    tier: "GCP Runtime Platform",
+    title: "GCP Runtime Domain Load Balancer",
+    subtitle: "Runtime deployment with managed load balancing, domain routing, HTTPS, and security policy design.",
+    problem:
+      "Cloud applications need a clean path from domain to load balancer to healthy runtime instances while keeping security and reliability visible.",
+    solution:
+      "Built a GCP platform using runtime instances, load balancing, domain configuration, managed certificate flow, and edge policy controls.",
+    impact: [
+      "Shows GCP infrastructure skills beyond AWS-only positioning.",
+      "Demonstrates load balancing, DNS, TLS, health checks, and runtime operations.",
+      "Strengthens multi-cloud credibility for Cloud Engineer and DevOps Engineer roles.",
+    ],
+    stack: ["GCP", "Terraform", "Cloud DNS", "HTTPS Load Balancer", "Cloud Armor", "MIG", "Certificate Manager"],
+    repo: projectLinks.p4,
+  },
+  {
+    id: "05",
+    tier: "Multi-Cloud Architecture",
+    title: "Secure Multi-Cloud Medical Application Platform",
+    subtitle: "Japan-resident database connectivity with AWS + GCP networking and security controls.",
+    problem:
+      "Healthcare-style systems often need strict data locality, secure cross-cloud routing, private connectivity, and compliance-minded logging.",
+    solution:
+      "Designed a multi-cloud platform with Japan-resident database connectivity, AWS and GCP application tiers, controlled traffic flow, WAF protection, and observability.",
+    impact: [
+      "Demonstrates advanced network architecture across providers.",
+      "Shows security design for sensitive workloads, data residency, origin protection, and logging.",
+      "Creates a flagship architecture story for senior technical interviews.",
+    ],
+    stack: ["AWS", "GCP", "Terraform", "Transit Gateway", "VPN", "BGP", "CloudFront", "WAF", "RDS", "CloudWatch"],
+    repo: projectLinks.p5,
+    featured: true,
+  },
+  {
+    id: "06",
+    tier: "CI/CD Security Gate",
+    title: "Guardian Lite",
+    subtitle: "GitLab security gate that reviews infrastructure risk before deployment.",
+    problem:
+      "Infrastructure changes can introduce public exposure, weak IAM, unencrypted storage, or missing governance before teams notice the damage.",
+    solution:
+      "Built a lightweight security gate for Terraform-driven workflows that checks infrastructure intent before changes move forward in CI/CD.",
+    impact: [
+      "Shows DevSecOps thinking through pipeline-level enforcement.",
+      "Demonstrates Go, GitLab CI, Terraform plan review, and deployment governance.",
+      "Gives interviewers a clear example of preventing cloud risk before runtime.",
+    ],
+    stack: ["Go", "GitLab CI", "Terraform", "OIDC", "AWS", "DevSecOps", "Policy Checks"],
+    repo: projectLinks.p6,
+    featured: true,
+  },
+];
+
+const proof = [
+  { label: "Flagship Builds", value: "6", detail: "AWS, GCP, multi-cloud, API security, zero trust, and CI/CD security." },
+  { label: "Core Direction", value: "Cloud", detail: "Infrastructure, security, automation, networking, observability, and operations." },
+  { label: "Primary Tools", value: "IaC", detail: "Terraform-first delivery with reproducible architecture and reviewable changes." },
 ];
 
 const experience = [
   {
-    role: "Infrastructure / Cloud / DevSecOps Consultant",
-    company: "Galabe & Sons LLC",
-    dates: "Jun 2025 – Present",
+    role: "Cloud Engineer",
+    company: "BlueLine Security Services",
+    dates: "2024 – Present",
     bullets: [
-      "Led the transition from locally managed infrastructure toward AWS and GCP cloud environments.",
-      "Designed and deployed infrastructure with Terraform for repeatable provisioning and stronger operational consistency.",
-      "Implemented DevSecOps practices in deployment workflows and CI/CD processes.",
-      "Managed IAM, networking, secure configuration, logging, and hardening across cloud environments.",
-      "Built and supported containerized workloads using Docker and Kubernetes.",
-    ],
-  },
-  {
-    role: "Cloud Security Engineer",
-    company: "BlueLine Security Services, LLC",
-    dates: "Jun 2024 – Present",
-    bullets: [
-      "Monitored and responded to cloud security events across AWS and GCP using Splunk and Google Chronicle.",
-      "Performed vulnerability assessment support and remediation coordination across cloud workloads.",
-      "Integrated security controls into CI/CD pipelines to strengthen DevSecOps practices.",
-      "Automated infrastructure provisioning with Terraform to reduce manual drift.",
-      "Supported IAM enforcement, secure configuration, incident response documentation, and operational runbooks.",
-    ],
-  },
-  {
-    role: "Junior Cloud Engineer",
-    company: "BlueLine Security Services, LLC",
-    dates: "Jun 2024 – Jan 2025",
-    bullets: [
-      "Supported AWS cloud deployments and day-to-day operational tasks under senior engineering guidance.",
-      "Assisted with security audits, vulnerability scanning, and environment reviews.",
-      "Monitored security alerts and contributed to incident response workflows.",
-      "Built hands-on experience with Linux administration, IAM, cloud networking, troubleshooting, and monitoring.",
+      "Built and supported AWS infrastructure patterns involving IAM, VPC networking, compute, monitoring, and secure configuration.",
+      "Used Terraform to make infrastructure changes repeatable, reviewable, and easier to troubleshoot.",
+      "Supported cloud security workflows through logging, alert review, access control, remediation, and operational documentation.",
+      "Worked across production-style troubleshooting scenarios involving Linux, networking, CloudWatch, IAM permissions, and deployment failures.",
+      "Integrated security thinking into cloud delivery instead of treating security as a final checklist item.",
     ],
   },
 ];
 
 const certifications = [
-  "AWS Security Specialty",
-  "AWS Solutions Architect Associate",
-  "AWS AI Practitioner",
-  "CompTIA CySA+",
+  "AWS Certified Solutions Architect – Associate",
+  "AWS Certified Security – Specialty",
+  "AWS Certified AI Practitioner",
   "HashiCorp Terraform Associate",
+  "CompTIA Security+",
+  "CompTIA CySA+",
+  "ISC2 Certified in Cybersecurity",
 ];
 
-const skills = [
-  "Amazon Web Services (AWS)",
-  "Google Cloud Platform (GCP)",
-  "Terraform",
+const strengths = [
+  "AWS Infrastructure",
+  "GCP Infrastructure",
+  "Terraform / IaC",
   "Cloud Security",
   "DevSecOps",
-  "Docker",
-  "Kubernetes",
-  "CloudFront",
-  "IAM",
+  "CI/CD Pipelines",
   "VPC Networking",
-  "Monitoring & Logging",
-  "Incident Response",
+  "IAM / Least Privilege",
+  "CloudWatch / Logging",
+  "API Gateway / Lambda",
+  "Cloudflare Pages",
+  "Linux Troubleshooting",
 ];
 
 const navLinkClass = ({ isActive }) =>
-  `transition-colors ${isActive ? "text-white" : "text-slate-400 hover:text-slate-200"}`;
+  `rounded-full px-4 py-2 text-sm font-semibold transition ${
+    isActive
+      ? "bg-red-500/15 text-red-100 ring-1 ring-red-300/30"
+      : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
+  }`;
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+};
 
 function Shell({ children }) {
   return (
-    <div className="min-h-screen bg-[#04101f] text-slate-200">
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(23,66,112,0.35),_transparent_35%),linear-gradient(90deg,rgba(22,57,97,0.22)_0%,rgba(5,16,31,0.0)_12%,rgba(22,57,97,0.15)_24%,rgba(5,16,31,0.0)_36%,rgba(22,57,97,0.12)_48%,rgba(5,16,31,0.0)_60%,rgba(22,57,97,0.16)_72%,rgba(5,16,31,0.0)_84%,rgba(22,57,97,0.22)_100%)]" />
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#03111f]/85 backdrop-blur">
-        <div className="mx-auto flex max-w-[1520px] items-center justify-between px-6 py-5 lg:px-10">
-          <NavLink to="/" className="text-sm font-semibold tracking-[0.28em] text-slate-100">
-            {profile.shortName}
+    <div className="min-h-screen overflow-hidden bg-[#050006] text-zinc-100">
+      <div className="eclipse-background" />
+      <div className="ember-field" />
+      <header className="sticky top-0 z-50 border-b border-red-100/10 bg-[#050006]/78 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1480px] items-center justify-between px-5 py-4 lg:px-8">
+          <NavLink to="/" className="group inline-flex items-center gap-3" end>
+            <span className="grid h-10 w-10 place-items-center rounded-2xl border border-red-300/20 bg-red-500/10 text-lg font-black text-red-100 shadow-[0_0_40px_rgba(220,38,38,0.25)] transition group-hover:rotate-[-8deg]">
+              GF
+            </span>
+            <span>
+              <span className="block text-xs font-bold tracking-[0.32em] text-zinc-100">{profile.shortName}</span>
+              <span className="block text-[0.68rem] uppercase tracking-[0.24em] text-red-200/70">Cloud systems under pressure</span>
+            </span>
           </NavLink>
-          <nav className="hidden items-center gap-8 text-sm md:flex">
+
+          <nav className="hidden items-center gap-1 md:flex">
             <NavLink to="/" className={navLinkClass} end>
               Home
-            </NavLink>
-            <NavLink to="/about" className={navLinkClass}>
-              About
             </NavLink>
             <NavLink to="/projects" className={navLinkClass}>
               Projects
@@ -141,6 +244,15 @@ function Shell({ children }) {
               Contact
             </NavLink>
           </nav>
+
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noreferrer"
+            className="hidden rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:border-red-300/40 hover:bg-red-500/10 md:inline-flex md:items-center md:gap-2"
+          >
+            <Github size={17} /> GitHub
+          </a>
         </div>
       </header>
       <main>{children}</main>
@@ -150,357 +262,352 @@ function Shell({ children }) {
 
 function PageIntro({ eyebrow, title, description }) {
   return (
-    <div className="mx-auto max-w-[1520px] px-6 pt-14 lg:px-10 lg:pt-20">
-      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">{eyebrow}</p>
-      <h1 className="max-w-6xl font-serif text-4xl leading-tight text-white md:text-6xl">{title}</h1>
-      <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{description}</p>
-    </div>
+    <section className="mx-auto max-w-[1480px] px-5 pb-8 pt-16 lg:px-8 lg:pt-24">
+      <motion.div variants={fadeUp} initial="hidden" animate="show">
+        <p className="mb-4 text-xs font-black uppercase tracking-[0.34em] text-red-200/80">{eyebrow}</p>
+        <h1 className="max-w-6xl text-balance font-serif text-4xl leading-[1.03] text-white md:text-6xl lg:text-7xl">{title}</h1>
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300">{description}</p>
+      </motion.div>
+    </section>
   );
 }
 
 function Card({ children, className = "" }) {
-  return <div className={`rounded-[2rem] border border-white/10 bg-slate-950/35 p-8 shadow-2xl shadow-black/20 ${className}`}>{children}</div>;
+  return <div className={`card-void rounded-[2rem] border border-white/10 bg-zinc-950/55 p-6 shadow-2xl shadow-black/30 lg:p-8 ${className}`}>{children}</div>;
 }
 
-function HomePage() {
+function Badge({ children }) {
+  return <span className="rounded-full border border-red-200/10 bg-white/[0.035] px-3 py-1.5 text-xs font-semibold text-zinc-300">{children}</span>;
+}
+
+function EclipseSigil() {
   return (
-    <div>
-      <section className="mx-auto grid max-w-[1520px] gap-10 px-8 py-14 lg:grid-cols-[1.2fr_0.8fr] lg:px-14 lg:py-20">
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">Cloud Infrastructure • DevSecOps • Cloud Security</p>
-          <h1 className="max-w-5xl font-serif text-5xl leading-[1.02] text-white md:text-7xl xl:text-[6.4rem]">
-            {profile.name} builds cloud systems that are designed to be secure, scalable, and hard to break.
-          </h1>
-          <p className="mt-8 max-w-4xl text-xl leading-9 text-slate-300 md:text-[1.45rem]">{profile.subtitle}</p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <NavLink
-              to="/projects"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-emerald-200"
-            >
-              View Projects <ArrowRight size={18} />
-            </NavLink>
-            <NavLink
-              to="/resume"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/5"
-            >
-              Resume Page <FileText size={18} />
-            </NavLink>
-          </div>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-          <Card className="h-full">
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-300">Positioning</p>
-            <div className="space-y-4">
-              {[
-                "Secure AWS and GCP infrastructure built with Terraform",
-                "Cloud security, observability, and failure-aware design",
-                "Production-minded DevSecOps with automation and control",
-                "Multi-cloud project work with monitoring and incident response",
-              ].map((item) => (
-                <div key={item} className="rounded-3xl border border-white/10 bg-white/[0.03] px-5 py-4 text-lg leading-8 text-slate-200">
-                  {item}
-                </div>
-              ))}
-            </div>
-            <div className="mt-8 space-y-3 text-slate-300">
-              <div className="flex items-center gap-3">
-                <MapPin size={18} className="text-emerald-300" />
-                <span>{profile.location}</span>
-              </div>
-              <div className="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-slate-200 w-fit">
-                {profile.citizenship}
-              </div>
-            </div>
-          </Card>
-        </motion.div>
-      </section>
-
-      <section className="mx-auto max-w-[1520px] px-6 pb-16 lg:px-10 lg:pb-24">
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            {
-              icon: <Cloud className="text-emerald-300" />,
-              title: "Cloud Architecture",
-              text: "AWS and GCP infrastructure designed for repeatability, security, and operational resilience.",
-            },
-            {
-              icon: <Shield className="text-emerald-300" />,
-              title: "Security-First Design",
-              text: "IAM, network controls, origin protection, logging, and hardening built into the system from day one.",
-            },
-            {
-              icon: <Server className="text-emerald-300" />,
-              title: "Operational Thinking",
-              text: "Monitoring, alerting, incident response, and failure handling treated as core architecture work.",
-            },
-          ].map((item) => (
-            <Card key={item.title}>
-              <div className="mb-5">{item.icon}</div>
-              <h3 className="font-serif text-3xl text-white">{item.title}</h3>
-              <p className="mt-4 text-lg leading-8 text-slate-300">{item.text}</p>
-            </Card>
-          ))}
+    <div className="hero-stage mx-auto aspect-square w-full max-w-[560px]">
+      <motion.div
+        className="sigil-system"
+        initial={{ opacity: 0, rotateX: 14, rotateY: -18, scale: 0.92 }}
+        animate={{ opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="sigil-ring ring-one" />
+        <div className="sigil-ring ring-two" />
+        <div className="sigil-ring ring-three" />
+        <div className="sigil-core">
+          <div className="sigil-blade" />
+          <div className="sigil-blade sigil-blade-two" />
+          <div className="sigil-node node-one">AWS</div>
+          <div className="sigil-node node-two">GCP</div>
+          <div className="sigil-node node-three">IaC</div>
+          <div className="sigil-node node-four">SEC</div>
         </div>
-      </section>
-
-      <section className="mx-auto max-w-[1520px] px-6 pb-16 lg:px-10 lg:pb-24">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">Why this site</p>
-        <h2 className="max-w-4xl font-serif text-4xl leading-tight text-white md:text-6xl">
-          A curated technical profile, not a generic portfolio
-        </h2>
-        <p className="mt-6 max-w-4xl text-lg leading-8 text-slate-300">
-          This site is meant to present real technical direction clearly. It focuses on cloud infrastructure, security, observability, automation, and projects that show how I think about production systems.
-        </p>
-        <Card className="mt-10 max-w-5xl">
-          <div className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-300">LinkedIn profile export</p>
-              <p className="mt-3 text-lg leading-8 text-slate-300">
-                "Cloud / DevOps Engineer focused on AWS, Terraform, infrastructure as code, cloud security, and DevSecOps."
-              </p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-300">Production-minded systems</p>
-              <p className="mt-3 text-lg leading-8 text-slate-300">
-                "I focus on systems that are secure, scalable, observable, and designed to keep working when conditions get rough."
-              </p>
-            </div>
-          </div>
-        </Card>
-      </section>
-
-      <section className="mx-auto max-w-[1520px] px-6 pb-20 lg:px-10 lg:pb-28">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">Flagship work</p>
-        <h2 className="max-w-5xl font-serif text-4xl leading-tight text-white md:text-6xl">
-          Projects that best support cloud, DevSecOps, and infrastructure positioning
-        </h2>
-        <p className="mt-6 max-w-4xl text-lg leading-8 text-slate-300">
-          The homepage highlights projects that show secure automation, multi-cloud architecture, production operations, and infrastructure depth.
-        </p>
-
-        <div className="mt-10 grid gap-6 xl:grid-cols-3">
-          {[
-            {
-              label: "Multi-Cloud Architecture",
-              title: "Multi-Cloud Secure Healthcare Infrastructure",
-              body: "A production-style healthcare system connecting AWS and GCP with secure networking, origin protection, observability, compliance-minded logging, and AI-assisted incident response.",
-            },
-            {
-              label: "AI Infrastructure",
-              title: "Domain Grounded AI Chat System on AWS",
-              body: "A hallucination-resistant RAG system on AWS using S3 documents, S3 Vectors, Bedrock Knowledge Bases, and a Lambda chat API, with optional CloudFront, Route 53, and ACM-based frontend hosting.",
-            },
-            {
-              label: "Infrastructure Positioning",
-              title: "Resume and Project Site",
-              body: "A static technical profile site built to present architecture depth, project proof, and recruiter-friendly technical signals without unnecessary backend complexity.",
-            },
-          ].map((item) => (
-            <Card key={item.title} className="flex h-full flex-col">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-300">{item.label}</p>
-              <h3 className="mt-4 font-serif text-3xl leading-tight text-white">{item.title}</h3>
-              <p className="mt-5 flex-1 text-lg leading-8 text-slate-300">{item.body}</p>
-              <NavLink to="/projects" className="mt-6 inline-flex items-center gap-2 font-semibold text-slate-100 hover:text-white">
-                See project detail <ArrowRight size={17} />
-              </NavLink>
-            </Card>
-          ))}
+        <div className="sigil-terminal">
+          <span className="text-red-200">$</span> terraform plan
+          <br />
+          <span className="text-red-200">$</span> deploy --hardened --observable
         </div>
-      </section>
+      </motion.div>
     </div>
   );
 }
 
-function AboutPage() {
+function HomePage() {
   return (
-    <div>
-      <PageIntro
-        eyebrow="About"
-        title="Technical background shaped by infrastructure, security controls, and operational failure modes"
-        description="My work centers on building cloud systems that stay reliable under pressure. I focus on infrastructure as code, secure architecture, observability, and DevSecOps practices that make systems easier to operate in the real world."
-      />
-      <section className="mx-auto grid max-w-[1520px] gap-6 px-6 py-12 lg:px-10 lg:py-16">
-        <Card>
-          <h2 className="font-serif text-4xl text-white">Current Positioning</h2>
-          <p className="mt-6 text-lg leading-8 text-slate-300">
-            Strongest themes across my work are cloud infrastructure, Terraform-based provisioning, cloud security, containerized workloads, and production-minded monitoring. I care about systems that are not only built, but supportable.
-          </p>
-        </Card>
-        <Card>
-          <h2 className="font-serif text-4xl text-white">Operating Style</h2>
-          <p className="mt-6 text-lg leading-8 text-slate-300">
-            I prefer simple, resilient architecture over unnecessary complexity. My approach is security-first, automation-heavy, and focused on reducing failure points before they become operational problems.
-          </p>
-        </Card>
-        <Card>
-          <h2 className="font-serif text-4xl text-white">Focus Areas</h2>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {skills.map((skill) => (
-              <span key={skill} className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-200">
-                {skill}
-              </span>
+    <>
+      <section className="mx-auto grid max-w-[1480px] items-center gap-12 px-5 py-14 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-24">
+        <motion.div variants={fadeUp} initial="hidden" animate="show">
+          <div className="mb-5 inline-flex rounded-full border border-red-200/15 bg-red-500/10 px-4 py-2 text-xs font-black uppercase tracking-[0.26em] text-red-100 shadow-[0_0_40px_rgba(127,29,29,0.25)]">
+            Dark fantasy theme • enterprise cloud execution
+          </div>
+          <h1 className="text-balance font-serif text-5xl leading-[0.98] text-white md:text-7xl xl:text-[6.8rem]">
+            Build like the system is already under attack.
+          </h1>
+          <p className="mt-7 max-w-3xl text-xl leading-9 text-zinc-300 md:text-2xl">{profile.subtitle}</p>
+          <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">{profile.positioning}</p>
+
+          <div className="mt-9 flex flex-wrap gap-4">
+            <NavLink to="/projects" className="btn-primary">
+              View flagship projects <ArrowRight size={18} />
+            </NavLink>
+            <NavLink to="/resume" className="btn-secondary">
+              Resume signal <FileText size={18} />
+            </NavLink>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {proof.map((item) => (
+              <div key={item.label} className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 backdrop-blur">
+                <p className="text-3xl font-black text-white">{item.value}</p>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.2em] text-red-200/80">{item.label}</p>
+                <p className="mt-3 text-sm leading-6 text-zinc-400">{item.detail}</p>
+              </div>
             ))}
           </div>
-        </Card>
+        </motion.div>
+
+        <EclipseSigil />
       </section>
-    </div>
+
+      <section className="mx-auto max-w-[1480px] px-5 pb-16 lg:px-8 lg:pb-24">
+        <div className="grid gap-5 md:grid-cols-3">
+          {[
+            {
+              icon: <Cloud />,
+              title: "Cloud Engineering",
+              text: "AWS and GCP infrastructure with networking, compute, domains, load balancing, TLS, monitoring, and automation.",
+            },
+            {
+              icon: <Shield />,
+              title: "Security by Design",
+              text: "IAM boundaries, private connectivity, logging, WAF controls, zero-trust access patterns, and secure-by-default architecture.",
+            },
+            {
+              icon: <Terminal />,
+              title: "DevOps Execution",
+              text: "Terraform, CI/CD, GitLab/GitHub workflows, deployment gates, repeatable environments, and operational troubleshooting.",
+            },
+          ].map((item) => (
+            <Card key={item.title} className="project-3d min-h-[280px]">
+              <div className="mb-6 grid h-13 w-13 place-items-center rounded-2xl border border-red-200/10 bg-red-500/10 text-red-100">{item.icon}</div>
+              <h2 className="font-serif text-3xl text-white">{item.title}</h2>
+              <p className="mt-4 text-lg leading-8 text-zinc-300">{item.text}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1480px] px-5 pb-20 lg:px-8 lg:pb-28">
+        <div className="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+          <div>
+            <p className="mb-3 text-xs font-black uppercase tracking-[0.34em] text-red-200/80">Recruiter-facing proof</p>
+            <h2 className="max-w-5xl font-serif text-4xl leading-tight text-white md:text-6xl">Six projects. One message: I can build cloud systems that survive pressure.</h2>
+          </div>
+          <NavLink to="/projects" className="btn-secondary w-fit">
+            Full project room <ArrowRight size={18} />
+          </NavLink>
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          {projects.filter((p) => p.featured).map((project) => (
+            <ProjectCard key={project.id} project={project} compact />
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function ProjectCard({ project, compact = false }) {
+  return (
+    <motion.article
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.18 }}
+      className="project-3d card-void group relative overflow-hidden rounded-[2rem] border border-white/10 bg-zinc-950/60 p-6 shadow-2xl shadow-black/30 lg:p-8"
+    >
+      <div className="absolute right-6 top-6 text-6xl font-black text-white/[0.035] transition group-hover:text-red-200/10 md:text-8xl">{project.id}</div>
+      <div className="relative z-10">
+        <div className="mb-5 flex flex-wrap items-center gap-3">
+          <span className="rounded-full border border-red-200/15 bg-red-500/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.22em] text-red-100">{project.tier}</span>
+          <span className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-zinc-400">{project.stack.slice(0, 3).join(" • ")}</span>
+        </div>
+        <h2 className="max-w-3xl font-serif text-3xl leading-tight text-white md:text-4xl">{project.title}</h2>
+        <p className="mt-4 text-lg leading-8 text-zinc-300">{project.subtitle}</p>
+
+        <div className={`mt-7 grid gap-4 ${compact ? "" : "xl:grid-cols-3"}`}>
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+            <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-red-200/80">Problem</p>
+            <p className="text-sm leading-7 text-zinc-300">{project.problem}</p>
+          </div>
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+            <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-red-200/80">Solution</p>
+            <p className="text-sm leading-7 text-zinc-300">{project.solution}</p>
+          </div>
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+            <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-red-200/80">Signal</p>
+            <p className="text-sm leading-7 text-zinc-300">{project.impact[0]}</p>
+          </div>
+        </div>
+
+        {!compact && (
+          <ul className="mt-7 grid gap-3 lg:grid-cols-3">
+            {project.impact.map((item) => (
+              <li key={item} className="flex gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm leading-6 text-zinc-300">
+                <CheckCircle2 className="mt-0.5 shrink-0 text-red-200" size={17} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className="mt-7 flex flex-wrap gap-2">
+          {project.stack.map((item) => (
+            <Badge key={`${project.id}-${item}`}>{item}</Badge>
+          ))}
+        </div>
+
+        <div className="mt-8">
+          <a href={project.repo} target="_blank" rel="noreferrer" className="btn-primary">
+            Open repository <ExternalLink size={18} />
+          </a>
+        </div>
+      </div>
+    </motion.article>
   );
 }
 
 function ProjectsPage() {
   return (
-    <div>
+    <>
       <PageIntro
-        eyebrow="Projects"
-        title="Selected infrastructure projects that show cloud architecture, security depth, and operational thinking"
-        description="These projects are positioned to show how I approach real systems: networking, secure access, observability, compliance-minded logging, automation, and infrastructure design that can scale beyond a one-off build."
+        eyebrow="Project war room"
+        title="Infrastructure evidence built for cloud engineering, AWS engineering, DevOps, and security interviews."
+        description="Each project is framed around business risk, architecture decisions, operational controls, and the hiring signal it creates. This is not a gallery. It is technical proof."
       />
-      <section className="mx-auto max-w-[1520px] space-y-8 px-6 py-12 lg:px-10 lg:py-16">
+      <section className="mx-auto max-w-[1480px] space-y-8 px-5 pb-20 lg:px-8 lg:pb-28">
         {projects.map((project) => (
-          <Card key={project.title}>
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-              <div>
-                <h2 className="font-serif text-4xl text-white">{project.title}</h2>
-                <p className="mt-4 max-w-4xl text-lg leading-8 text-slate-300">{project.blurb}</p>
-              </div>
-            </div>
-            <ul className="mt-8 space-y-4 text-slate-200">
-              {project.bullets.map((bullet) => (
-                <li key={bullet} className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 leading-8">
-                  {bullet}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8 rounded-3xl border border-white/10 bg-slate-900/50 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-300">Stack</p>
-              <p className="mt-3 text-lg leading-8 text-slate-300">{project.stack}</p>
-            </div>
-            {project.repo && (
-              <div className="mt-6">
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-emerald-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-emerald-200"
-                >
-                  View GitHub Repo <ExternalLink size={18} />
-                </a>
-              </div>
-            )}
-          </Card>
+          <ProjectCard key={project.id} project={project} />
         ))}
       </section>
-    </div>
+    </>
   );
 }
 
 function ResumePage() {
   return (
-    <div>
+    <>
       <PageIntro
-        eyebrow="Resume"
-        title="Experience, credentials, and skills organized for quick technical review"
-        description="This page is intentionally scannable. It favors clear evidence over a dense wall of text and gives recruiters or hiring managers a faster way to understand technical direction."
+        eyebrow="Resume signal"
+        title="Cloud engineer profile built around security, automation, networking, and production troubleshooting."
+        description="This page is intentionally fast to scan. Recruiters should understand the target roles, strongest technical signals, certifications, and project depth without digging through the entire site."
       />
-      <section className="mx-auto max-w-[1520px] space-y-8 px-6 py-12 lg:px-10 lg:py-16">
-        {experience.map((item) => (
-          <Card key={`${item.role}-${item.company}`}>
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-              <div>
-                <h2 className="font-serif text-4xl text-white">{item.role}</h2>
-                <p className="mt-2 text-lg text-slate-300">{item.company}</p>
-              </div>
-              <div className="rounded-full border border-white/10 px-5 py-2 text-sm text-slate-300">{item.dates}</div>
+      <section className="mx-auto grid max-w-[1480px] gap-6 px-5 pb-20 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:pb-28">
+        <div className="space-y-6">
+          <Card>
+            <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl border border-red-200/10 bg-red-500/10 text-red-100">
+              <FileText />
             </div>
-            <ul className="mt-8 space-y-4 text-slate-200">
-              {item.bullets.map((bullet) => (
-                <li key={bullet} className="leading-8">
-                  • {bullet}
+            <h2 className="font-serif text-3xl text-white">Target Roles</h2>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Cloud Engineer", "AWS Engineer", "DevOps Engineer", "Cloud Security Engineer", "Infrastructure Engineer"].map((role) => (
+                <Badge key={role}>{role}</Badge>
+              ))}
+            </div>
+          </Card>
+
+          <Card>
+            <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl border border-red-200/10 bg-red-500/10 text-red-100">
+              <Award />
+            </div>
+            <h2 className="font-serif text-3xl text-white">Certifications</h2>
+            <ul className="mt-6 space-y-3">
+              {certifications.map((cert) => (
+                <li key={cert} className="flex gap-3 text-zinc-300">
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-red-200" size={18} />
+                  <span>{cert}</span>
                 </li>
               ))}
             </ul>
           </Card>
-        ))}
+        </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="space-y-6">
+          {experience.map((job) => (
+            <Card key={`${job.role}-${job.company}`}>
+              <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.28em] text-red-200/80">Experience</p>
+                  <h2 className="mt-3 font-serif text-4xl text-white">{job.role}</h2>
+                  <p className="mt-2 text-lg text-zinc-300">{job.company}</p>
+                </div>
+                <span className="w-fit rounded-full border border-white/10 px-4 py-2 text-sm text-zinc-400">{job.dates}</span>
+              </div>
+              <ul className="mt-8 space-y-4">
+                {job.bullets.map((bullet) => (
+                  <li key={bullet} className="flex gap-3 text-base leading-7 text-zinc-300">
+                    <CheckCircle2 className="mt-1 shrink-0 text-red-200" size={18} />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          ))}
+
           <Card>
-            <h3 className="font-serif text-3xl text-white">Certifications</h3>
-            <ul className="mt-6 space-y-3 text-lg leading-8 text-slate-300">
-              {certifications.map((cert) => (
-                <li key={cert}>• {cert}</li>
-              ))}
-            </ul>
-          </Card>
-          <Card>
-            <h3 className="font-serif text-3xl text-white">Core Skills</h3>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {skills.map((skill) => (
-                <span key={skill} className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-200">
-                  {skill}
-                </span>
+            <h2 className="font-serif text-3xl text-white">Core Technical Signals</h2>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {strengths.map((item) => (
+                <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-semibold text-zinc-300">
+                  {item}
+                </div>
               ))}
             </div>
           </Card>
         </div>
-
-        <Card>
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h3 className="font-serif text-3xl text-white">Resume Access</h3>
-              <p className="mt-3 text-lg leading-8 text-slate-300">
-                I do not provide a public resume download on this site. I’m happy to walk through experience, projects, and technical decisions during an interview.
-              </p>
-            </div>
-            <div className="rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-slate-200">
-              Shared on request
-            </div>
-          </div>
-        </Card>
       </section>
-    </div>
+    </>
   );
 }
 
 function ContactPage() {
   return (
-    <div>
+    <>
       <PageIntro
         eyebrow="Contact"
-        title="Direct and low-friction contact"
-        description="This site is static, so the contact setup is intentionally simple. Use direct links for email, LinkedIn, and GitHub instead of adding a backend form you do not need."
+        title="For cloud, AWS, DevOps, infrastructure, and security-focused opportunities."
+        description="The site stays static for Cloudflare Pages. Contact stays simple: email, GitHub, LinkedIn, and the live portfolio."
       />
-      <section className="mx-auto grid max-w-[1520px] gap-6 px-6 py-12 lg:grid-cols-2 lg:px-10 lg:py-16">
+      <section className="mx-auto grid max-w-[1480px] gap-6 px-5 pb-20 lg:grid-cols-2 lg:px-8 lg:pb-28">
         <Card>
           <h2 className="font-serif text-4xl text-white">Primary Links</h2>
-          <div className="mt-8 space-y-5 text-lg text-slate-300">
-            <a href={`mailto:${profile.email}`} className="flex items-center gap-3 hover:text-white">
-              <Mail size={20} className="text-emerald-300" /> {profile.email}
+          <div className="mt-8 space-y-4">
+            <a className="contact-link" href={`mailto:${profile.email}?subject=Cloud%20Engineering%20Opportunity`}>
+              <Mail size={20} /> {profile.email}
             </a>
-            <a href={profile.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white">
-              <Linkedin size={20} className="text-emerald-300" /> LinkedIn
+            <a className="contact-link" href={profile.github} target="_blank" rel="noreferrer">
+              <Github size={20} /> GitHub Profile
             </a>
-            <a href={profile.github} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white">
-              <Github size={20} className="text-emerald-300" /> GitHub
+            <a className="contact-link" href={profile.linkedin} target="_blank" rel="noreferrer">
+              <Linkedin size={20} /> LinkedIn Profile
+            </a>
+            <a className="contact-link" href={profile.website} target="_blank" rel="noreferrer">
+              <Globe2 size={20} /> Live Portfolio
             </a>
           </div>
         </Card>
+
         <Card>
-          <h2 className="font-serif text-4xl text-white">Why this setup</h2>
-          <p className="mt-6 text-lg leading-8 text-slate-300">
-            A mail link and public profile links keep the site fully static for Cloudflare Pages. That means simpler hosting, lower maintenance, and much less risk of turning a portfolio into a billable application.
-          </p>
-          <div className="mt-8">
-            <a
-              href={`mailto:${profile.email}?subject=Website%20Inquiry`}
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-emerald-200"
-            >
-              Compose Email <ArrowRight size={18} />
-            </a>
+          <h2 className="font-serif text-4xl text-white">What I am looking for</h2>
+          <div className="mt-8 space-y-4">
+            {[
+              "Cloud Engineer roles focused on AWS infrastructure, Terraform, networking, monitoring, and production support.",
+              "AWS Engineer roles involving VPCs, IAM, compute, load balancing, CloudWatch, automation, and secure deployments.",
+              "DevOps Engineer roles involving CI/CD, infrastructure as code, deployment reliability, and cloud operations.",
+              "Cloud Security roles involving IAM, logging, hardening, access control, detection, and remediation.",
+            ].map((item) => (
+              <div key={item} className="rounded-3xl border border-white/10 bg-white/[0.03] p-5 text-base leading-7 text-zinc-300">
+                {item}
+              </div>
+            ))}
           </div>
         </Card>
       </section>
-    </div>
+    </>
+  );
+}
+
+function HomeMobileNav() {
+  return (
+    <nav className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 gap-1 rounded-full border border-white/10 bg-black/70 p-1 backdrop-blur-xl md:hidden">
+      <NavLink to="/" className={navLinkClass} end>
+        Home
+      </NavLink>
+      <NavLink to="/projects" className={navLinkClass}>
+        Projects
+      </NavLink>
+      <NavLink to="/contact" className={navLinkClass}>
+        Contact
+      </NavLink>
+    </nav>
   );
 }
 
@@ -510,11 +617,11 @@ export default function App() {
       <Shell>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
+        <HomeMobileNav />
       </Shell>
     </HashRouter>
   );
