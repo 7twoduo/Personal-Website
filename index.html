@@ -1,34 +1,1453 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#050006" />
-    <title>Gavin Fogwe | Cloud Engineer</title>
-    <meta
-      name="description"
-      content="Gavin Fogwe is a Cloud / AWS / DevOps Engineer building secure, observable, production-minded infrastructure with AWS, GCP, Terraform, CI/CD, and cloud security controls."
-    />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gavin Fogwe — Cloud Engineer | World-Class 3D Portfolio</title>
+<meta name="description" content="Gavin Fogwe - Cloud Engineer. Jaw-dropping interactive 3D portfolio with games, particle physics, and immersive experiences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#02040a;--bg-2:#0a0f1e;--bg-3:#111827;
+--accent:#00f0c8;--accent-2:#00d4ff;--accent-3:#a855f7;--accent-4:#f59e0b;--accent-5:#ef4444;
+--text:#f0f9ff;--text-2:#94a3b8;--text-3:#64748b;--text-4:#475569;
+--border:rgba(255,255,255,0.04);--border-2:rgba(255,255,255,0.1);
+--glow:0 0 60px rgba(0,240,200,0.12);--glow-blue:0 0 60px rgba(0,212,255,0.12);
+--ease-out:cubic-bezier(0.16,1,0.3,1);--ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;cursor:none}
+::selection{background:rgba(0,240,200,0.2);color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent),var(--accent-2));border-radius:3px}
 
-    <meta property="og:title" content="Gavin Fogwe | Cloud Engineer" />
-    <meta
-      property="og:description"
-      content="Secure cloud infrastructure, DevOps automation, AWS/GCP architecture, Terraform, and security-first portfolio projects."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://gavinfogwe.win/" />
-    <meta property="og:image" content="https://gavinfogwe.win/preview.png" />
+/* ===== CURSOR SYSTEM ===== */
+.cursor-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s,background 0.2s;box-shadow:0 0 10px var(--accent)}
+.cursor-ring{width:40px;height:40px;border:1.5px solid rgba(0,240,200,0.3);border-radius:50%;position:fixed;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,border-color 0.3s,background 0.3s}
+.cursor-ring.hover{width:60px;height:60px;border-color:rgba(0,240,200,0.6);background:rgba(0,240,200,0.04)}
+.cursor-dot.hover{width:0;height:0}
+@media(pointer:coarse){.cursor-dot,.cursor-ring{display:none}body{cursor:auto}}
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Gavin Fogwe | Cloud Engineer" />
-    <meta
-      name="twitter:description"
-      content="Cloud infrastructure, AWS, GCP, Terraform, DevOps, and cloud security portfolio."
-    />
-    <meta name="twitter:image" content="https://gavinfogwe.win/preview.png" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+/* ===== LOADING SCREEN ===== */
+.loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity 1s,visibility 1s}
+.loading.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loading-cube{width:60px;height:60px;position:relative;transform-style:preserve-3d;animation:cubeSpin 2s infinite linear}
+@keyframes cubeSpin{0%{transform:rotateX(0) rotateY(0)}100%{transform:rotateX(360deg) rotateY(360deg)}}
+.loading-cube-face{position:absolute;width:60px;height:60px;background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0.8;border:1px solid rgba(255,255,255,0.2)}
+.loading-cube-face:nth-child(1){transform:translateZ(30px)}
+.loading-cube-face:nth-child(2){transform:rotateY(180deg) translateZ(30px)}
+.loading-cube-face:nth-child(3){transform:rotateY(90deg) translateZ(30px)}
+.loading-cube-face:nth-child(4){transform:rotateY(-90deg) translateZ(30px)}
+.loading-cube-face:nth-child(5){transform:rotateX(90deg) translateZ(30px)}
+.loading-cube-face:nth-child(6){transform:rotateX(-90deg) translateZ(30px)}
+.loading-text{margin-top:2rem;font-family:'Space Grotesk';font-size:0.9rem;color:var(--accent);letter-spacing:0.25em;font-weight:600}
+.loading-sub{margin-top:0.6rem;font-size:0.75rem;color:var(--text-3);letter-spacing:0.1em}
+.loading-bar{width:140px;height:2px;background:var(--border);border-radius:2px;margin-top:1rem;overflow:hidden}
+.loading-bar-inner{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));animation:loadFill 1.5s ease forwards}
+@keyframes loadFill{to{width:100%}}
+
+/* ===== NOISE + AURORA ===== */
+.noise{position:fixed;inset:0;pointer-events:none;z-index:9990;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat}
+.aurora{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.aurora-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;animation:auroraMove 20s infinite alternate}
+.aurora-blob:nth-child(1){width:600px;height:600px;background:var(--accent);top:-10%;left:-10%;animation-delay:0s}
+.aurora-blob:nth-child(2){width:500px;height:500px;background:var(--accent-2);top:40%;right:-15%;animation-delay:-7s}
+.aurora-blob:nth-child(3){width:400px;height:400px;background:var(--accent-3);bottom:-10%;left:30%;animation-delay:-14s}
+@keyframes auroraMove{0%{transform:translate(0,0) scale(1)}100%{transform:translate(50px,-30px) scale(1.2)}}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;backdrop-filter:blur(24px) saturate(1.3);background:rgba(2,4,10,0.7);border-bottom:1px solid var(--border);transition:transform 0.5s var(--ease-out),background 0.3s}
+.nav.hidden-nav{transform:translateY(-100%)}
+.nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Space Grotesk';font-weight:700;font-size:1rem;letter-spacing:0.18em;color:var(--text);display:flex;align-items:center;gap:0.5rem;text-decoration:none}
+.nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{color:var(--text-3);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.04em;transition:all 0.3s;position:relative;cursor:none;padding:0.5rem 0}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:1.5px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;transition:width 0.4s var(--ease-out)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--bg);padding:0.55rem 1.6rem;border-radius:50px;font-weight:600;font-size:0.78rem;transition:all 0.3s var(--ease-out);border:none;cursor:none;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);transition:left 0.6s}
+.nav-cta:hover::before{left:100%}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:var(--glow)}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--text);cursor:none;padding:0.5rem}
+.mobile-menu{position:fixed;top:0;right:0;bottom:0;width:300px;background:var(--bg-2);border-left:1px solid var(--border);z-index:1001;padding:5rem 2rem 2rem;transform:translateX(100%);transition:transform 0.5s var(--ease-out);backdrop-filter:blur(30px)}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu a{display:block;color:var(--text-2);text-decoration:none;padding:1.2rem 0;font-size:1.1rem;font-weight:500;border-bottom:1px solid var(--border);transition:all 0.3s}
+.mobile-menu a:hover{color:var(--accent);padding-left:1rem}
+.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;opacity:0;visibility:hidden;transition:all 0.4s;backdrop-filter:blur(4px)}
+.mobile-overlay.open{opacity:1;visibility:visible}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;padding:0;position:relative;overflow:hidden}
+.hero-canvas-container{position:absolute;inset:0;z-index:0}
+#hero-canvas-full{width:100%;height:100%}
+.hero-content{position:relative;z-index:2;max-width:1400px;margin:0 auto;width:100%;padding:120px 2rem 60px;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.2rem;background:rgba(0,240,200,0.06);border:1px solid rgba(0,240,200,0.12);border-radius:50px;font-size:0.7rem;font-weight:600;letter-spacing:0.15em;color:var(--accent);margin-bottom:2rem;width:fit-content;backdrop-filter:blur(10px);animation:fadeInUp 0.8s var(--ease-out) both}
+.hero-eyebrow .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse-dot 2.5s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,240,200,0.5)}50%{opacity:0.5;box-shadow:0 0 0 10px rgba(0,240,200,0)}}
+.hero h1{font-family:'Space Grotesk';font-size:clamp(2.8rem,5.5vw,4.5rem);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem;animation:fadeInUp 0.8s 0.1s var(--ease-out) both}
+.hero h1 .gradient-text{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 50%,var(--accent-3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-subtitle{font-size:1.1rem;color:var(--text-2);max-width:520px;margin-bottom:2.5rem;line-height:1.8;animation:fadeInUp 0.8s 0.2s var(--ease-out) both}
+.hero-stats{display:flex;gap:3.5rem;margin-bottom:2.5rem;animation:fadeInUp 0.8s 0.3s var(--ease-out) both}
+.stat-item{cursor:none;transition:all 0.4s var(--ease-spring);position:relative;padding:0.5rem 0}
+.stat-item:hover{transform:translateY(-6px)}
+.stat-item h3{font-family:'Space Grotesk';font-size:2.6rem;font-weight:700;color:var(--accent);line-height:1;transition:all 0.3s}
+.stat-item:hover h3{text-shadow:0 0 40px rgba(0,240,200,0.3)}
+.stat-item p{font-size:0.75rem;color:var(--text-3);font-weight:500;margin-top:0.5rem;letter-spacing:0.08em;text-transform:uppercase}
+.stat-item::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;transition:width 0.5s var(--ease-out)}
+.stat-item:hover::after{width:50px}
+.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeInUp 0.8s 0.4s var(--ease-out) both}
+.btn{display:inline-flex;align-items:center;gap:0.6rem;padding:0.9rem 2rem;border-radius:50px;font-weight:600;font-size:0.88rem;text-decoration:none;transition:all 0.4s var(--ease-out);border:none;cursor:none;position:relative;overflow:hidden;letter-spacing:0.02em}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--bg);box-shadow:0 4px 25px rgba(0,240,200,0.2)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(0,240,200,0.35)}
+.btn-secondary{background:transparent;color:var(--text);border:1.5px solid var(--border-2)}
+.btn-secondary:hover{border-color:var(--accent);background:rgba(0,240,200,0.05);transform:translateY(-3px);box-shadow:var(--glow)}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SECTIONS ===== */
+.section{padding:100px 2rem;position:relative}
+.section-container{max-width:1300px;margin:0 auto}
+.section-header{margin-bottom:4rem}
+.section-eyebrow{display:inline-flex;align-items:center;gap:0.6rem;font-size:0.7rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;padding:0.5rem 0}
+.section-eyebrow::after{content:'';display:block;width:40px;height:1px;background:linear-gradient(90deg,var(--accent),transparent);margin-left:0.8rem}
+.section-title{font-family:'Space Grotesk';font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.1;max-width:700px;letter-spacing:-0.02em}
+.section-desc{font-size:1.05rem;color:var(--text-2);max-width:600px;margin-top:1rem;line-height:1.8}
+
+/* ===== GLASS CARD ===== */
+.glass{background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.005));border:1px solid var(--border);border-radius:24px;padding:2rem;transition:all 0.6s var(--ease-out);position:relative;overflow:hidden;backdrop-filter:blur(24px)}
+.glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity 0.6s}
+.glass::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mouse-x,50%) var(--mouse-y,50%),rgba(0,240,200,0.06),transparent 50%);opacity:0;transition:opacity 0.4s;pointer-events:none}
+.glass:hover{border-color:var(--border-2);transform:translateY(-10px) scale(1.01);box-shadow:0 30px 70px rgba(0,0,0,0.5),var(--glow)}
+.glass:hover::before{opacity:0.6}
+.glass:hover::after{opacity:1}
+
+/* ===== PROJECTS ===== */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.5rem}
+.project-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.2rem}
+.project-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:transform 0.4s var(--ease-spring)}
+.glass:hover .project-icon{transform:scale(1.15) rotate(-5deg)}
+.project-num{font-family:'Space Grotesk';font-size:0.75rem;font-weight:700;color:var(--text-4);letter-spacing:0.1em}
+.project-card h3{font-family:'Space Grotesk';font-size:1.2rem;font-weight:600;margin-bottom:0.7rem;line-height:1.3}
+.project-card p{color:var(--text-2);font-size:0.88rem;line-height:1.8;margin-bottom:1.4rem}
+.project-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.4rem}
+.project-tag{padding:0.3rem 0.8rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:50px;font-size:0.7rem;font-weight:500;color:var(--text-3);transition:all 0.4s}
+.glass:hover .project-tag{border-color:rgba(0,240,200,0.2);color:var(--accent);background:rgba(0,240,200,0.06)}
+.project-link{display:inline-flex;align-items:center;gap:0.5rem;color:var(--accent);text-decoration:none;font-size:0.85rem;font-weight:600;transition:all 0.3s;position:relative}
+.project-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--accent);transition:width 0.4s}
+.project-link:hover::after{width:100%}
+.project-link:hover{gap:0.8rem}
+
+/* ===== TIMELINE ===== */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent-2),var(--accent-3),transparent)}
+.timeline-item{position:relative;padding-bottom:2.5rem;padding-left:2rem}
+.timeline-item::before{content:'';position:absolute;left:-2rem;top:0.3rem;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);box-shadow:0 0 0 4px rgba(0,240,200,0.1);transition:all 0.5s var(--ease-spring);cursor:none}
+.timeline-item:hover::before{background:var(--accent);box-shadow:0 0 0 10px rgba(0,240,200,0.15);transform:scale(1.3)}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-card:hover{transform:translateX(10px)}
+.timeline-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.8rem;flex-wrap:wrap;gap:0.6rem}
+.timeline-header h3{font-family:'Space Grotesk';font-size:1.15rem;font-weight:600}
+.timeline-company{color:var(--accent);font-weight:600;font-size:0.88rem;margin-top:0.2rem}
+.timeline-date{padding:0.4rem 1rem;background:rgba(0,240,200,0.06);border:1px solid rgba(0,240,200,0.12);border-radius:50px;font-size:0.72rem;font-weight:600;color:var(--accent);white-space:nowrap;letter-spacing:0.03em}
+.timeline-card ul{list-style:none;margin-top:1rem}
+.timeline-card li{padding:0.4rem 0;padding-left:1.5rem;position:relative;color:var(--text-2);font-size:0.86rem;line-height:1.75;transition:all 0.3s}
+.timeline-card li:hover{color:var(--text);padding-left:1.8rem}
+.timeline-card li::before{content:'';position:absolute;left:0;top:0.85rem;width:7px;height:7px;background:var(--accent);border-radius:50%;opacity:0.5;transition:all 0.4s var(--ease-spring)}
+.timeline-card li:hover::before{opacity:1;transform:scale(1.4);box-shadow:0 0 12px var(--accent)}
+
+/* ===== SKILLS ===== */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.skill-card h4{font-family:'Space Grotesk';font-size:1.05rem;font-weight:600;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.7rem}
+.skill-card h4 .icon{color:var(--accent);transition:all 0.4s var(--ease-spring)}
+.skill-card:hover h4 .icon{transform:scale(1.2) rotate(-8deg)}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.skill-tag{padding:0.4rem 1rem;background:rgba(0,240,200,0.05);border:1px solid rgba(0,240,200,0.1);border-radius:50px;font-size:0.78rem;color:var(--text-2);transition:all 0.4s var(--ease-out);cursor:none;position:relative;overflow:hidden}
+.skill-tag::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0;transition:opacity 0.3s}
+.skill-tag:hover{background:rgba(0,240,200,0.12);color:var(--accent);transform:translateY(-3px) scale(1.05);border-color:rgba(0,240,200,0.25);box-shadow:var(--glow)}
+
+/* ===== GAME SECTIONS ===== */
+.game-section{padding:100px 2rem;position:relative;overflow:hidden}
+.game-container{max-width:1100px;margin:0 auto;text-align:center}
+.game-canvas-wrap{width:100%;height:420px;border-radius:24px;border:1px solid var(--border);background:linear-gradient(180deg,var(--bg-2),var(--bg));margin:2rem 0;position:relative;overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.3)}
+.game-canvas{width:100%;height:100%}
+.game-ui{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:10;transition:opacity 0.5s;width:90%}
+.game-ui.hidden{opacity:0;pointer-events:none}
+.game-title{font-family:'Space Grotesk';font-size:2.2rem;font-weight:700;margin-bottom:0.6rem;text-shadow:0 0 50px rgba(0,240,200,0.3);letter-spacing:-0.02em}
+.game-subtitle{color:var(--text-2);margin-bottom:2rem;font-size:0.95rem;max-width:500px;margin-left:auto;margin-right:auto}
+.game-btn{padding:0.8rem 2rem;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--bg);border:none;border-radius:50px;font-weight:600;font-size:0.9rem;cursor:none;transition:all 0.3s var(--ease-out);font-family:'Inter'}
+.game-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:var(--glow)}
+.game-score{position:absolute;top:1rem;right:1.5rem;font-family:'Space Grotesk';font-size:1.2rem;font-weight:700;color:var(--accent);z-index:5;text-shadow:0 0 20px rgba(0,240,200,0.3)}
+.game-overlay{position:absolute;inset:0;background:rgba(2,4,10,0.85);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20;opacity:0;visibility:hidden;transition:all 0.5s}
+.game-overlay.active{opacity:1;visibility:visible}
+.game-overlay h3{font-family:'Space Grotesk';font-size:2rem;margin-bottom:0.5rem}
+.game-overlay p{color:var(--text-2);margin-bottom:1.5rem}
+
+/* Cert Game Specific */
+.cert-guess-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.cert-guess-btn{width:70px;height:70px;border-radius:50%;border:2px solid var(--accent);background:rgba(0,240,200,0.06);color:var(--accent);font-family:'Space Grotesk';font-size:1.4rem;font-weight:700;cursor:none;transition:all 0.35s var(--ease-spring);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.cert-guess-btn:hover{background:var(--accent);color:var(--bg);transform:scale(1.15);box-shadow:var(--glow)}
+.cert-guess-btn.wrong{background:rgba(239,68,68,0.15);border-color:var(--accent-5);color:var(--accent-5);animation:shake 0.5s}
+.cert-guess-btn.correct{background:var(--accent);color:var(--bg);animation:correctPop 0.6s var(--ease-spring)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-12px)}75%{transform:translateX(12px)}}
+@keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1.1)}}
+.cert-reveal{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:10;width:92%;max-height:90%;overflow-y:auto;padding:1rem}
+.cert-reveal.active{display:block}
+.cert-reveal-number{font-family:'Space Grotesk';font-size:5rem;font-weight:700;color:var(--accent);text-shadow:0 0 60px rgba(0,240,200,0.4);line-height:1;animation:countUp 0.8s var(--ease-out)}
+@keyframes countUp{from{transform:scale(0) rotate(-10deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.cert-reveal-text{font-size:1.15rem;color:var(--text-2);margin-top:0.5rem}
+.cert-reveal-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:0.8rem;margin-top:1.5rem;text-align:left}
+.cert-reveal-item{background:linear-gradient(135deg,rgba(0,240,200,0.05),rgba(0,212,255,0.03));border:1px solid rgba(0,240,200,0.12);border-radius:16px;padding:1.1rem;display:flex;align-items:center;gap:0.9rem;transition:all 0.4s;animation:slideUp 0.5s var(--ease-out) forwards;opacity:0;backdrop-filter:blur(10px)}
+.cert-reveal-item:nth-child(1){animation-delay:0.15s}
+.cert-reveal-item:nth-child(2){animation-delay:0.25s}
+.cert-reveal-item:nth-child(3){animation-delay:0.35s}
+.cert-reveal-item:nth-child(4){animation-delay:0.45s}
+.cert-reveal-item:nth-child(5){animation-delay:0.55s}
+.cert-reveal-item:nth-child(6){animation-delay:0.65s}
+.cert-reveal-item:hover{background:linear-gradient(135deg,rgba(0,240,200,0.1),rgba(0,212,255,0.06));transform:translateX(8px) scale(1.02);border-color:var(--accent);box-shadow:var(--glow)}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.cert-reveal-icon{width:44px;height:44px;min-width:44px;border-radius:12px;background:rgba(0,240,200,0.08);border:1px solid rgba(0,240,200,0.15);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.3rem}
+.cert-reveal-item h4{font-size:0.88rem;font-weight:600;line-height:1.3}
+.cert-reveal-item p{font-size:0.72rem;color:var(--text-3);margin-top:0.15rem}
+
+/* Threat Defender */
+.threat-canvas-wrap{height:400px}
+.threat-hud{position:absolute;top:1rem;left:1.5rem;z-index:5;display:flex;gap:1.5rem}
+.threat-hud-item{font-family:'Space Grotesk';font-size:0.8rem;color:var(--text-3)}
+.threat-hud-item span{color:var(--accent);font-weight:700;font-size:1.1rem}
+.threat-controls{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:0.8rem}
+.threat-control-btn{padding:0.5rem 1.2rem;background:rgba(0,240,200,0.08);border:1px solid rgba(0,240,200,0.15);border-radius:50px;color:var(--accent);font-size:0.75rem;font-weight:600;cursor:none;transition:all 0.3s}
+.threat-control-btn:hover{background:var(--accent);color:var(--bg)}
+.threat-control-btn.active{background:var(--accent);color:var(--bg);box-shadow:var(--glow)}
+
+/* Stack Architect */
+.stack-canvas-wrap{height:450px}
+.stack-hud{position:absolute;top:1rem;left:1.5rem;right:1.5rem;z-index:5;display:flex;justify-content:space-between;align-items:center}
+.stack-hud-item{font-family:'Space Grotesk';font-size:0.8rem;color:var(--text-3)}
+.stack-hud-item span{color:var(--accent);font-weight:700;font-size:1.1rem}
+.stack-next{position:absolute;top:1rem;right:1.5rem;z-index:5;padding:0.6rem 1.2rem;background:rgba(0,240,200,0.06);border:1px solid rgba(0,240,200,0.12);border-radius:12px;font-size:0.8rem;color:var(--text-2)}
+.stack-next strong{color:var(--accent)}
+
+/* ===== CONTACT ===== */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.contact-card h3{font-family:'Space Grotesk';font-size:1.4rem;font-weight:600;margin-bottom:1.5rem}
+.contact-link{display:flex;align-items:center;gap:1rem;padding:1rem 0;color:var(--text-2);text-decoration:none;font-size:0.95rem;transition:all 0.4s;border-bottom:1px solid var(--border);position:relative}
+.contact-link:last-child{border-bottom:none}
+.contact-link:hover{color:var(--accent);padding-left:1rem}
+.contact-link .icon{color:var(--accent);transition:all 0.4s var(--ease-spring);display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:rgba(0,240,200,0.06);border:1px solid rgba(0,240,200,0.1)}
+.contact-link:hover .icon{background:rgba(0,240,200,0.12);transform:scale(1.15) rotate(-5deg);box-shadow:var(--glow)}
+
+/* ===== FOOTER ===== */
+.footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;color:var(--text-3);font-size:0.85rem;position:relative}
+.footer::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.footer a{color:var(--accent);text-decoration:none;transition:all 0.3s}
+.footer a:hover{opacity:0.7;text-shadow:0 0 20px rgba(0,240,200,0.3)}
+
+/* ===== BACK TO TOP ===== */
+.back-to-top{position:fixed;bottom:2rem;right:2rem;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;color:var(--bg);display:flex;align-items:center;justify-content:center;cursor:none;z-index:999;opacity:0;visibility:hidden;transform:translateY(20px);transition:all 0.5s var(--ease-out);box-shadow:var(--glow)}
+.back-to-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.back-to-top:hover{transform:translateY(-5px) scale(1.1);box-shadow:0 10px 40px rgba(0,240,200,0.3)}
+
+/* ===== CONFETTI ===== */
+#confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9995}
+
+/* ===== ANIMATIONS ===== */
+.animate{opacity:0;transform:translateY(50px);transition:all 0.9s var(--ease-out)}
+.animate.visible{opacity:1;transform:translateY(0)}
+.animate-left{opacity:0;transform:translateX(-50px);transition:all 0.9s var(--ease-out)}
+.animate-left.visible{opacity:1;transform:translateX(0)}
+.animate-scale{opacity:0;transform:scale(0.85);transition:all 0.9s var(--ease-out)}
+.animate-scale.visible{opacity:1;transform:scale(1)}
+.d1{transition-delay:0.1s}
+.d2{transition-delay:0.2s}
+.d3{transition-delay:0.3s}
+.d4{transition-delay:0.4s}
+.d5{transition-delay:0.5s}
+.d6{transition-delay:0.6s}
+
+/* ===== SPOTLIGHT ===== */
+.spotlight{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(circle at var(--spotlight-x,50%) var(--spotlight-y,50%),rgba(0,240,200,0.04),transparent 40%);transition:background 0.3s}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+.hero-content{grid-template-columns:1fr;gap:3rem;padding-top:100px}
+.hero h1{font-size:clamp(2.2rem,8vw,3.5rem)}
+.contact-grid{grid-template-columns:1fr}
+.game-canvas-wrap{height:380px}
+.threat-canvas-wrap,.stack-canvas-wrap{height:350px}
+}
+@media(max-width:768px){
+.nav-links{display:none}.mobile-menu-btn{display:block}
+.hero h1{font-size:clamp(2rem,10vw,3rem)}
+.hero-stats{gap:2rem}
+.hero-stats h3{font-size:2rem}
+.hero-buttons{flex-direction:column}.btn{width:100%;justify-content:center}
+.section{padding:70px 1.5rem}
+.projects-grid{grid-template-columns:1fr}
+.timeline{padding-left:1rem}.timeline-item{padding-left:1.5rem}
+.game-title{font-size:1.6rem}.cert-reveal-number{font-size:3.5rem}
+.cert-guess-btn{width:55px;height:55px;font-size:1.1rem}
+.cert-reveal-list{grid-template-columns:1fr}
+.contact-grid{grid-template-columns:1fr}
+.back-to-top{bottom:1rem;right:1rem;width:44px;height:44px}
+.game-canvas-wrap{height:320px}
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NOISE + AURORA -->
+<div class="noise"></div>
+<div class="aurora"><div class="aurora-blob"></div><div class="aurora-blob"></div><div class="aurora-blob"></div></div>
+
+<!-- CONFETTI -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+<div class="loading-cube">
+<div class="loading-cube-face"></div><div class="loading-cube-face"></div>
+<div class="loading-cube-face"></div><div class="loading-cube-face"></div>
+<div class="loading-cube-face"></div><div class="loading-cube-face"></div>
+</div>
+<div class="loading-text">BUILDING EXPERIENCE</div>
+<div class="loading-sub">Gavin Fogwe — Cloud Engineer</div>
+<div class="loading-bar"><div class="loading-bar-inner"></div></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="navbar">
+<div class="nav-container">
+<a class="nav-logo" onclick="scrollTo('home')">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f0c8"/><stop offset="100%" style="stop-color:#00d4ff"/></linearGradient></defs><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+GAVIN<span>FOGWE</span>
+</a>
+<ul class="nav-links">
+<li><a onclick="scrollTo('home')" id="nav-home">Home</a></li>
+<li><a onclick="scrollTo('about')" id="nav-about">About</a></li>
+<li><a onclick="scrollTo('projects')" id="nav-projects">Projects</a></li>
+<li><a onclick="scrollTo('experience')" id="nav-experience">Experience</a></li>
+<li><a onclick="scrollTo('threat-game')" id="nav-threat-game">Defender</a></li>
+<li><a onclick="scrollTo('stack-game')" id="nav-stack-game">Stack</a></li>
+<li><a onclick="scrollTo('cert-game')" id="nav-cert-game">Certs</a></li>
+<li><a onclick="scrollTo('skills')" id="nav-skills">Skills</a></li>
+<li><a onclick="scrollTo('contact')" id="nav-contact">Contact</a></li>
+</ul>
+<button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<a class="nav-cta" href="mailto:cerogavin@gmail.com">Hire Me</a>
+</div>
+</nav>
+<div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobile-menu">
+<a onclick="scrollTo('home');toggleMobileMenu()">Home</a>
+<a onclick="scrollTo('about');toggleMobileMenu()">About</a>
+<a onclick="scrollTo('projects');toggleMobileMenu()">Projects</a>
+<a onclick="scrollTo('experience');toggleMobileMenu()">Experience</a>
+<a onclick="scrollTo('threat-game');toggleMobileMenu()">Threat Defender</a>
+<a onclick="scrollTo('stack-game');toggleMobileMenu()">Stack Architect</a>
+<a onclick="scrollTo('cert-game');toggleMobileMenu()">Cert Master</a>
+<a onclick="scrollTo('skills');toggleMobileMenu()">Skills</a>
+<a onclick="scrollTo('contact');toggleMobileMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+<div class="hero-canvas-container"><canvas id="hero-canvas-full"></canvas></div>
+<div class="hero-content">
+<div>
+<div class="hero-eyebrow"><span class="dot"></span>AVAILABLE FOR HIRE — US CITIZEN</div>
+<h1><span class="gradient-text" id="scramble-text">Gavin Fogwe</span> builds cloud systems that are secure, scalable, and impossible to break.</h1>
+<p class="hero-subtitle">Cloud Engineer specializing in AWS infrastructure, Terraform automation, cloud security, and DevSecOps. I turn business requirements into production-grade systems.</p>
+<div class="hero-stats">
+<div class="stat-item" onclick="scrollTo('projects')"><h3 class="counter" data-target="6">0</h3><p>Production Projects</p></div>
+<div class="stat-item" onclick="scrollTo('cert-game')"><h3 class="counter" data-target="6">0</h3><p>Certifications</p></div>
+<div class="stat-item" onclick="scrollTo('experience')"><h3 class="counter" data-target="6">0</h3><p>Years Experience</p></div>
+</div>
+<div class="hero-buttons">
+<button class="btn btn-primary magnetic" onclick="scrollTo('projects')">View Projects <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+<button class="btn btn-secondary magnetic" onclick="scrollTo('threat-game')">Play Games <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+</div>
+</div>
+<div></div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+<div class="section-container">
+<div class="section-header animate">
+<div class="section-eyebrow">About Me</div>
+<h2 class="section-title">Infrastructure engineer who thinks in systems, not just services</h2>
+<p class="section-desc">I design cloud architecture that survives real-world failure modes. Security-first, automation-heavy, and built to scale beyond the whiteboard.</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem">
+<div class="glass animate d1 tilt-card" onmousemove="spotlight(event,this)" onmouseleave="spotlightOut(this)">
+<h3 style="font-family:'Space Grotesk';font-size:1.25rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00f0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg> Current Focus</h3>
+<p style="color:var(--text-2);line-height:1.8;font-size:0.9rem">Terraform-based provisioning, multi-cloud architecture, zero-trust security models, containerized workloads, and production observability. I build systems that are supportable, not just deployable.</p>
+</div>
+<div class="glass animate d2 tilt-card" onmousemove="spotlight(event,this)" onmouseleave="spotlightOut(this)">
+<h3 style="font-family:'Space Grotesk';font-size:1.25rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00f0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Operating Philosophy</h3>
+<p style="color:var(--text-2);line-height:1.8;font-size:0.9rem">Simple beats complex. Resilience beats features. Observability beats hope. I reduce failure surfaces before they become incidents, and I automate everything that can be automated.</p>
+</div>
+<div class="glass animate d3 tilt-card" onmousemove="spotlight(event,this)" onmouseleave="spotlightOut(this)">
+<h3 style="font-family:'Space Grotesk';font-size:1.25rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00f0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Location & Contact</h3>
+<div style="display:flex;flex-direction:column;gap:0.7rem;color:var(--text-2);font-size:0.9rem">
+<span style="display:flex;align-items:center;gap:0.5rem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00f0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> United States</span>
+<span style="display:inline-flex;align-items:center;padding:0.35rem 1rem;background:rgba(0,240,200,0.08);border:1px solid rgba(0,240,200,0.15);border-radius:50px;font-size:0.78rem;font-weight:600;color:var(--accent);width:fit-content">US Citizen — No Sponsorship Needed</span>
+<span style="display:flex;align-items:center;gap:0.5rem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00f0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> cerogavin@gmail.com</span>
+<span style="display:flex;align-items:center;gap:0.5rem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00f0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> 240-467-4614</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+<div class="section-container">
+<div class="section-header animate">
+<div class="section-eyebrow">Featured Projects</div>
+<h2 class="section-title">Infrastructure that proves I can build what I claim</h2>
+<p class="section-desc">Every project below is production-minded: secure networking, observability, compliance logging, and infrastructure designed to scale.</p>
+</div>
+<div class="projects-grid" id="projects-grid"></div>
+<div class="animate" style="margin-top:3rem;text-align:center">
+<a href="https://github.com/7twoduo" target="_blank" rel="noopener noreferrer" class="btn btn-secondary magnetic" style="display:inline-flex">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+View All GitHub Projects
+</a>
+</div>
+</div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+<div class="section-container">
+<div class="section-header animate">
+<div class="section-eyebrow">Professional Experience</div>
+<h2 class="section-title">Built for recruiters who scan, designed for engineers who read</h2>
+<p class="section-desc">Clear evidence. No fluff. Every bullet is a signal of technical depth.</p>
+</div>
+<div class="timeline" id="timeline"></div>
+</div>
+</section>
+
+<!-- GAME 1: THREAT DEFENDER -->
+<section id="threat-game" class="game-section">
+<div class="game-container">
+<div class="section-header animate">
+<div class="section-eyebrow">Interactive Game 1</div>
+<h2 class="section-title" style="margin:0 auto">Threat Defender</h2>
+<p class="section-desc" style="margin:0.8rem auto 0">Click to deploy AWS security services. Stop threats before they reach the database. Score points. Prove you understand cloud security.</p>
+</div>
+<div class="game-canvas-wrap threat-canvas-wrap">
+<canvas id="threat-canvas" class="game-canvas"></canvas>
+<div class="threat-hud">
+<div class="threat-hud-item">Waves: <span id="threat-wave">1</span></div>
+<div class="threat-hud-item">Score: <span id="threat-score">0</span></div>
+<div class="threat-hud-item">Lives: <span id="threat-lives">5</span></div>
+</div>
+<div class="threat-controls">
+<button class="threat-control-btn active" id="btn-waf" onclick="selectDefense('waf')">WAF</button>
+<button class="threat-control-btn" id="btn-shield" onclick="selectDefense('shield')">Shield</button>
+<button class="threat-control-btn" id="btn-guard" onclick="selectDefense('guard')">GuardDuty</button>
+</div>
+<div class="game-overlay" id="threat-overlay">
+<h3>Game Over</h3>
+<p>Final Score: <span id="threat-final">0</span></p>
+<button class="game-btn" onclick="startThreatGame()">Play Again</button>
+</div>
+<div class="game-ui" id="threat-start">
+<div class="game-title">THREAT DEFENDER</div>
+<div class="game-subtitle">Deploy AWS security services to stop incoming threats. Click anywhere to place defenses. Don't let them reach the database.</div>
+<button class="game-btn magnetic" onclick="startThreatGame()">Start Defense</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- GAME 2: STACK ARCHITECT -->
+<section id="stack-game" class="game-section">
+<div class="game-container">
+<div class="section-header animate">
+<div class="section-eyebrow">Interactive Game 2</div>
+<h2 class="section-title" style="margin:0 auto">Stack Architect</h2>
+<p class="section-desc" style="margin:0.8rem auto 0">Stack infrastructure blocks to build the tallest cloud architecture. Physics-based. Every block is a real AWS or GCP service.</p>
+</div>
+<div class="game-canvas-wrap stack-canvas-wrap">
+<canvas id="stack-canvas" class="game-canvas"></canvas>
+<div class="stack-hud">
+<div class="stack-hud-item">Height: <span id="stack-height">0</span></div>
+<div class="stack-hud-item">Best: <span id="stack-best">0</span></div>
+</div>
+<div class="stack-next" id="stack-next">Next: <strong>VPC</strong></div>
+<div class="game-overlay" id="stack-overlay">
+<h3>Stack Collapsed!</h3>
+<p>Height: <span id="stack-final">0</span></p>
+<button class="game-btn" onclick="startStackGame()">Try Again</button>
+</div>
+<div class="game-ui" id="stack-start">
+<div class="game-title">STACK ARCHITECT</div>
+<div class="game-subtitle">Click to drop infrastructure blocks. Stack VPC, EC2, RDS, Lambda, and more. Build the tallest cloud tower without letting it collapse.</div>
+<button class="game-btn magnetic" onclick="startStackGame()">Start Building</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- GAME 3: CERT MASTER -->
+<section id="cert-game" class="game-section">
+<div class="game-container">
+<div class="section-header animate">
+<div class="section-eyebrow">Interactive Game 3</div>
+<h2 class="section-title" style="margin:0 auto">Cert Master</h2>
+<p class="section-desc" style="margin:0.8rem auto 0">Guess how many industry certifications I hold. Get it right and watch the 3D reveal with confetti.</p>
+</div>
+<div class="game-canvas-wrap">
+<canvas id="cert-canvas" class="game-canvas"></canvas>
+<div class="game-ui" id="cert-ui">
+<div class="game-title">HOW MANY CERTS?</div>
+<div class="game-subtitle">Take a guess. The 3D sphere knows the answer.</div>
+<div class="cert-guess-buttons">
+<button class="cert-guess-btn magnetic" onclick="guessCert(3)">3</button>
+<button class="cert-guess-btn magnetic" onclick="guessCert(4)">4</button>
+<button class="cert-guess-btn magnetic" onclick="guessCert(5)">5</button>
+<button class="cert-guess-btn magnetic" onclick="guessCert(6)">6</button>
+<button class="cert-guess-btn magnetic" onclick="guessCert(7)">7</button>
+</div>
+</div>
+<div class="cert-reveal" id="cert-reveal">
+<div class="cert-reveal-number">6</div>
+<div class="cert-reveal-text">Industry-recognized certifications</div>
+<div class="cert-reveal-list" id="cert-list"></div>
+<button class="game-btn" onclick="resetCertGame()" style="margin-top:1.5rem">Play Again</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+<div class="section-container">
+<div class="section-header animate">
+<div class="section-eyebrow">Technical Skills</div>
+<h2 class="section-title">The toolkit behind the infrastructure</h2>
+</div>
+<div class="skills-grid" id="skills-grid"></div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+<div class="section-container">
+<div class="section-header animate">
+<div class="section-eyebrow">Get In Touch</div>
+<h2 class="section-title">Let's build something that doesn't break</h2>
+<p class="section-desc">I'm open to cloud engineering, DevOps, and infrastructure roles. Preferably ones where "security" isn't an afterthought.</p>
+</div>
+<div class="contact-grid">
+<div class="glass animate">
+<h3 style="font-family:'Space Grotesk';font-size:1.4rem;font-weight:600;margin-bottom:1.5rem">Direct Contact</h3>
+<a href="mailto:cerogavin@gmail.com" class="contact-link">
+<span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+cerogavin@gmail.com
+</a>
+<a href="https://www.linkedin.com/in/gavin-fogwe" target="_blank" rel="noopener noreferrer" class="contact-link">
+<span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>
+LinkedIn Profile
+</a>
+<a href="https://github.com/7twoduo" target="_blank" rel="noopener noreferrer" class="contact-link">
+<span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span>
+GitHub Profile
+</a>
+<a href="tel:240-467-4614" class="contact-link">
+<span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+240-467-4614
+</a>
+</div>
+<div class="glass animate d1">
+<h3 style="font-family:'Space Grotesk';font-size:1.4rem;font-weight:600;margin-bottom:1.5rem">Why This Site</h3>
+<p style="color:var(--text-2);line-height:1.8;margin-bottom:1.5rem;font-size:0.9rem">No backend. No forms. No tracking. Just a static site deployed on Cloudflare Pages with Three.js, Canvas games, and pure HTML/CSS/JS. The same stack I'd recommend for a low-maintenance, high-performance production deployment.</p>
+<a href="mailto:cerogavin@gmail.com?subject=Cloud%20Engineer%20Opportunity" class="btn btn-primary magnetic" style="display:inline-flex">
+Start a Conversation
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<p>Engineered with Three.js, Canvas API, and obsession by <a href="https://github.com/7twoduo" target="_blank" rel="noopener noreferrer">Gavin Fogwe</a></p>
+<p style="margin-top:0.5rem;font-size:0.75rem">AWS · Terraform · Cloud Security · DevOps · Kubernetes · Python</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="back-to-top" onclick="scrollTo('home')" aria-label="Back to top">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+// ===== DATA =====
+const projects=[
+{id:1,title:"Secure Multi-Tier AWS Application Platform",blurb:"Production-style multi-tier AWS platform with ECS on EC2, ALB, RDS MySQL, VPC peering, Terraform, and private app-to-database connectivity.",tags:["AWS","ECS","ALB","RDS","VPC Peering","Terraform"],repo:"https://github.com/7twoduo/Secure-Multi-Tier-AWS-Application-Platform-with-Private-Database-Connectivity",color:"#00f0c8",icon:"server"},
+{id:2,title:"Zero-Trust Vendor Access Control Plane",blurb:"Zero-trust access workflows using API Gateway, Lambda, DynamoDB, IAM/STS, S3 evidence storage, KMS encryption, and CloudTrail visibility.",tags:["AWS","API Gateway","Lambda","DynamoDB","KMS","CloudTrail"],repo:"https://github.com/7twoduo/Zero-Trust-Vendor-Access-Control-Plane-on-AWS",color:"#00d4ff",icon:"lock"},
+{id:3,title:"Enterprise Serverless API Security Platform",blurb:"Serverless API security controls with API Gateway, Lambda, AWS WAF, API keys, usage plans, throttling, CloudWatch alarms, and EventBridge.",tags:["AWS","API Gateway","WAF","Lambda","CloudWatch","EventBridge"],repo:"https://github.com/7twoduo/Enterprise-Serverless-API-Security-Platform-on-AWS",color:"#a855f7",icon:"shield"},
+{id:4,title:"GCP Runtime Domain Load Balancer",blurb:"Production-inspired GCP infrastructure with Terraform, private Compute Engine VMs, Cloud NAT, Cloud Storage artifacts, Nginx, and global HTTP Load Balancer.",tags:["GCP","Terraform","Compute Engine","Cloud NAT","Load Balancer"],repo:"https://github.com/7twoduo/GCP-Runtime-Domain-Load-Balancer",color:"#f59e0b",icon:"globe"},
+{id:5,title:"Secure Multi-Cloud Medical Application Platform",blurb:"Multi-cloud healthcare infrastructure across AWS and GCP with secure networking, observability, compliance logging, and Japan-resident database connectivity.",tags:["AWS","GCP","Multi-Cloud","Transit Gateway","CloudFront","WAF"],repo:"https://github.com/7twoduo/Secure-Multi-Cloud-Medical-Application-Platform-with-Japan-Resident-Database-Connectivity",color:"#ec4899",icon:"database"},
+{id:6,title:"Guardian Lite (GitLab)",blurb:"Cloud security and infrastructure monitoring project demonstrating security-first design and operational visibility.",tags:["Cloud Security","Monitoring","DevSecOps"],repo:"https://gitlab.com/7twoduo/guardian-lite",color:"#10b981",icon:"eye"}
+];
+
+const experience=[
+{role:"Cloud Engineer",company:"BlueLine Security Services, LLC",dates:"June 2024 – Present",bullets:["Build, support, and troubleshoot AWS cloud infrastructure across compute, networking, identity, storage, database, security, logging, and monitoring","Provision and standardize infrastructure with Terraform, focusing on repeatable deployments and environment consistency","Designed secure multi-tier AWS application architecture with public ALB, private application workloads, and private RDS MySQL","Implemented private cross-VPC connectivity using VPC peering, route tables, and security group controls","Supported containerized application delivery using ECS on EC2, ECR, Dockerized Flask workloads, and CloudWatch monitoring","Built serverless API security controls using API Gateway, Lambda, AWS WAF, API keys, usage plans, and throttling","Developed zero-trust access workflows using API Gateway, Lambda, DynamoDB, IAM/STS, S3, and KMS encryption","Designed multi-cloud connectivity patterns using AWS Transit Gateway, GCP HA VPN, BGP route exchange, CloudFront, and WAF","Implemented GCP private compute architecture with Compute Engine, Cloud NAT, Cloud Router, and global HTTP load balancing","Hardened cloud access through least-privilege IAM, Systems Manager private access, encryption patterns, and security group controls"]},
+{role:"Cloud Infrastructure Assistant",company:"Mentored Client Support",dates:"January 2019 – September 2023",bullets:["Assisted experienced mentor with client-focused cloud infrastructure support while building hands-on AWS, Linux, and networking skills","Supported infrastructure setup, basic troubleshooting, documentation, access-control reviews, and cloud validation tasks","Helped document repeatable processes, deployment steps, issue notes, and operational findings for easier handoff and troubleshooting"]}
+];
+
+const certifications=[
+{name:"AWS Certified Solutions Architect – Associate",org:"Amazon Web Services",icon:"🏗️"},
+{name:"AWS Certified Security – Specialty",org:"Amazon Web Services",icon:"🔒"},
+{name:"HashiCorp Terraform Associate",org:"HashiCorp",icon:"🏗️"},
+{name:"AWS Certified AI Practitioner",org:"Amazon Web Services",icon:"🤖"},
+{name:"CompTIA Security+",org:"CompTIA",icon:"🛡️"},
+{name:"CompTIA CySA+",org:"CompTIA",icon:"🔍"}
+];
+
+const skills=[
+{category:"Cloud Platforms",items:["AWS","GCP","EC2","VPC","IAM","S3","Lambda","RDS","DynamoDB","CloudFront","API Gateway","WAF","ECS","ECR","CloudWatch","CloudTrail","KMS","Systems Manager","Compute Engine","Cloud NAT","Cloud Storage"]},
+{category:"Infrastructure as Code",items:["Terraform","CloudFormation","Ansible","GitHub Actions","GitLab CI","Jenkins","Bash","Python"]},
+{category:"Security & Compliance",items:["Least Privilege IAM","WAF Rules","Encryption","KMS","CloudTrail Auditing","VPC Security","Zero-Trust Architecture","DevSecOps"]},
+{category:"Networking & DevOps",items:["VPC Design","Subnets","Route Tables","Security Groups","Load Balancers","VPC Peering","Transit Gateway","VPN","Docker","Kubernetes","CI/CD"]}
+];
+
+const icons={
+server:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
+lock:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+shield:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+globe:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+database:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+eye:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+};
+
+// ===== RENDER =====
+function renderProjects(){
+const grid=document.getElementById('projects-grid');
+projects.forEach((p,i)=>{
+const el=document.createElement('div');
+el.className='glass project-card animate d'+(i+1);
+el.innerHTML='<div class="project-header"><div class="project-icon" style="background:'+p.color+'10;border:1px solid '+p.color+'20;color:'+p.color+'">'+icons[p.icon]+'</div><span class="project-num">0'+(i+1)+'</span></div><h3>'+p.title+'</h3><p>'+p.blurb+'</p><div class="project-tags">'+p.tags.map(t=>'<span class="project-tag">'+t+'</span>').join('')+'</div><a href="'+p.repo+'" target="_blank" rel="noopener noreferrer" class="project-link">View Repository <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>';
+grid.appendChild(el);
+});
+}
+
+function renderTimeline(){
+const tl=document.getElementById('timeline');
+experience.forEach((e,i)=>{
+const el=document.createElement('div');
+el.className='timeline-item animate d'+(i+1);
+el.innerHTML='<div class="timeline-card glass"><div class="timeline-header"><div><h3>'+e.role+'</h3><p class="timeline-company">'+e.company+'</p></div><span class="timeline-date">'+e.dates+'</span></div><ul>'+e.bullets.map(b=>'<li>'+b+'</li>').join('')+'</ul></div>';
+tl.appendChild(el);
+});
+}
+
+function renderSkills(){
+const grid=document.getElementById('skills-grid');
+const skillIcons=['<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'];
+skills.forEach((s,i)=>{
+const el=document.createElement('div');
+el.className='glass skill-card animate d'+(i+1);
+el.innerHTML='<h4><span class="icon">'+skillIcons[i]+'</span>'+s.category+'</h4><div class="skill-tags">'+s.items.map(item=>'<span class="skill-tag">'+item+'</span>').join('')+'</div>';
+grid.appendChild(el);
+});
+}
+
+function renderCertList(){
+const list=document.getElementById('cert-list');
+list.innerHTML='';
+certifications.forEach((c,i)=>{
+const el=document.createElement('div');
+el.className='cert-reveal-item';
+el.innerHTML='<div class="cert-reveal-icon">'+c.icon+'</div><div><h4>'+c.name+'</h4><p>'+c.org+'</p></div>';
+list.appendChild(el);
+});
+}
+
+// ===== UTILS =====
+function scrollTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+function toggleMobileMenu(){document.getElementById('mobile-menu').classList.toggle('open');document.getElementById('mobile-overlay').classList.toggle('open');}
+
+// ===== CUSTOM CURSOR =====
+function initCursor(){
+if(window.matchMedia('(pointer:coarse)').matches)return;
+const dot=document.getElementById('cursor-dot');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+function update(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;dot.style.left=mx+'px';dot.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(update);}
+update();
+document.querySelectorAll('a,button,.stat-item,.project-card,.skill-tag,.cert-guess-btn,.tilt-card,.magnetic,.game-btn,.threat-control-btn').forEach(el=>{
+el.addEventListener('mouseenter',()=>{dot.classList.add('hover');ring.classList.add('hover');});
+el.addEventListener('mouseleave',()=>{dot.classList.remove('hover');ring.classList.remove('hover');});
+});
+}
+
+// ===== MAGNETIC BUTTONS =====
+function initMagnetic(){
+if(window.matchMedia('(pointer:coarse)').matches)return;
+document.querySelectorAll('.magnetic').forEach(btn=>{
+btn.addEventListener('mousemove',e=>{
+const rect=btn.getBoundingClientRect();
+const x=e.clientX-rect.left-rect.width/2;
+const y=e.clientY-rect.top-rect.height/2;
+btn.style.transform='translate('+x*0.3+'px,'+y*0.3+'px)';
+});
+btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+});
+}
+
+// ===== TEXT SCRAMBLE =====
+function scrambleText(el,finalText,duration=1000){
+const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+let iterations=0;
+const interval=setInterval(()=>{
+el.innerText=finalText.split('').map((c,i)=>{if(i<iterations)return finalText[i];return chars[Math.floor(Math.random()*chars.length)];}).join('');
+if(iterations>=finalText.length){clearInterval(interval);el.innerText=finalText;}
+iterations+=1/2;
+},duration/finalText.length/2);
+}
+
+// ===== COUNTER ANIMATION =====
+function animateCounters(){
+document.querySelectorAll('.counter').forEach(counter=>{
+const target=+counter.getAttribute('data-target');
+const duration=1800;
+const start=performance.now();
+function update(now){
+const elapsed=now-start;
+const progress=Math.min(elapsed/duration,1);
+const eased=1-Math.pow(1-progress,4);
+counter.innerText=Math.floor(eased*target);
+if(progress<1)requestAnimationFrame(update);
+}
+requestAnimationFrame(update);
+});
+}
+
+// ===== NAV SCROLL =====
+let lastScroll=0;
+function handleNavScroll(){
+const nav=document.getElementById('navbar');
+const backToTop=document.getElementById('back-to-top');
+const currentScroll=window.scrollY;
+if(currentScroll>150){nav.classList.toggle('hidden-nav',currentScroll>lastScroll&&currentScroll>400);}else{nav.classList.remove('hidden-nav');}
+backToTop?.classList.toggle('visible',currentScroll>800);
+lastScroll=currentScroll;
+}
+
+function updateNavActive(){
+const sections=['home','about','projects','experience','threat-game','stack-game','cert-game','skills','contact'];
+let current='home';
+for(const s of sections){const el=document.getElementById(s);if(el&&el.getBoundingClientRect().top<200)current=s;}
+document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.id==='nav-'+current));
+}
+
+// ===== SPOTLIGHT ON CARDS =====
+function spotlight(e,el){const rect=el.getBoundingClientRect();const x=((e.clientX-rect.left)/rect.width)*100;const y=((e.clientY-rect.top)/rect.height)*100;el.style.setProperty('--mouse-x',x+'%');el.style.setProperty('--mouse-y',y+'%');}
+function spotlightOut(el){el.style.setProperty('--mouse-x','50%');el.style.setProperty('--mouse-y','50%');}
+
+// ===== TILT CARDS =====
+function initTiltCards(){
+if(window.matchMedia('(pointer:coarse)').matches)return;
+document.querySelectorAll('.tilt-card').forEach(card=>{
+card.addEventListener('mousemove',e=>{
+const rect=card.getBoundingClientRect();
+const x=e.clientX-rect.left;const y=e.clientY-rect.top;
+const cx=rect.width/2;const cy=rect.height/2;
+const rx=(y-cy)/cy*-12;const ry=(x-cx)/cx*12;
+card.style.transform='perspective(1000px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-8px)';
+});
+card.addEventListener('mouseleave',()=>{card.style.transform='';});
+});
+}
+
+// ===== THREE.JS FULL-SCREEN HERO =====
+function initHeroThree(){
+try{
+if(typeof THREE==='undefined')return;
+const canvas=document.getElementById('hero-canvas-full');
+if(!canvas)return;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(50,canvas.clientWidth/canvas.clientHeight,0.1,200);
+camera.position.set(0,0,12);
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setSize(canvas.clientWidth,canvas.clientHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+scene.add(new THREE.AmbientLight(0x0a1628,0.8));
+const p1=new THREE.PointLight(0x00f0c8,1.5,80);p1.position.set(8,8,8);scene.add(p1);
+const p2=new THREE.PointLight(0x00d4ff,0.9,80);p2.position.set(-8,-6,-4);scene.add(p2);
+const p3=new THREE.PointLight(0xa855f7,0.6,80);p3.position.set(0,8,-10);scene.add(p3);
+// Core sphere
+const sphereGeo=new THREE.IcosahedronGeometry(1.4,3);
+const sphereMat=new THREE.MeshPhongMaterial({color:0x00f0c8,emissive:0x004d3d,shininess:100,flatShading:true,transparent:true,opacity:0.9});
+const sphere=new THREE.Mesh(sphereGeo,sphereMat);
+scene.add(sphere);
+// Wireframe
+const wireGeo=new THREE.IcosahedronGeometry(1.45,2);
+const wireMat=new THREE.MeshBasicMaterial({color:0x00f0c8,wireframe:true,transparent:true,opacity:0.1});
+const wireframe=new THREE.Mesh(wireGeo,wireMat);
+scene.add(wireframe);
+// Rings
+const rings=[];
+const ringColors=[0x00f0c8,0x00d4ff,0xa855f7];
+const ringRadii=[2.8,3.8,4.8];
+ringRadii.forEach((r,i)=>{
+const geo=new THREE.TorusGeometry(r,0.02,16,100);
+const mat=new THREE.MeshBasicMaterial({color:ringColors[i],transparent:true,opacity:0.35});
+const ring=new THREE.Mesh(geo,mat);
+ring.rotation.x=Math.random()*Math.PI;
+ring.rotation.y=Math.random()*Math.PI;
+scene.add(ring);
+rings.push({mesh:ring,speed:(i+1)*0.2});
+});
+// Particles
+const particles=[];
+const particleColors=[0x00f0c8,0x00d4ff,0xa855f7,0xf59e0b,0xec4899];
+for(let i=0;i<100;i++){
+const geo=new THREE.OctahedronGeometry(0.06,0);
+const mat=new THREE.MeshBasicMaterial({color:particleColors[i%5],transparent:true,opacity:0.5});
+const mesh=new THREE.Mesh(geo,mat);
+mesh.position.set((Math.random()-0.5)*16,(Math.random()-0.5)*10,(Math.random()-0.5)*8);
+scene.add(mesh);
+particles.push({mesh,speed:Math.random()*0.3+0.1,offset:Math.random()*Math.PI*2});
+}
+// Stars
+const starsGeo=new THREE.BufferGeometry();
+const starsPos=new Float32Array(3000*3);
+for(let i=0;i<3000*3;i++)starsPos[i]=(Math.random()-0.5)*150;
+starsGeo.setAttribute('position',new THREE.BufferAttribute(starsPos,3));
+const starsMat=new THREE.PointsMaterial({color:0xffffff,size:0.03,transparent:true,opacity:0.4});
+const stars=new THREE.Points(starsGeo,starsMat);
+scene.add(stars);
+// Mouse
+let mouseX=0,mouseY=0,targetX=0,targetY=0;
+document.addEventListener('mousemove',e=>{
+mouseX=(e.clientX/window.innerWidth-0.5)*2;
+mouseY=(e.clientY/window.innerHeight-0.5)*2;
+});
+let time=0;
+function animate(){
+requestAnimationFrame(animate);
+time+=0.01;
+sphere.rotation.y+=0.005;
+sphere.rotation.x=Math.sin(time*0.3)*0.06;
+sphere.scale.setScalar(1+Math.sin(time*1.5)*0.02);
+wireframe.rotation.copy(sphere.rotation);
+wireframe.scale.copy(sphere.scale);
+rings.forEach(r=>{r.mesh.rotation.x+=r.speed*0.006;r.mesh.rotation.y+=r.speed*0.003;});
+particles.forEach(p=>{p.mesh.position.y+=Math.sin(time*p.speed+p.offset)*0.002;p.mesh.rotation.x+=0.01;p.mesh.rotation.y+=0.01;});
+stars.rotation.y+=0.0001;
+targetX=mouseX*0.3;targetY=mouseY*0.3;
+camera.position.x+=(targetX-camera.position.x)*0.03;
+camera.position.y+=(targetY-camera.position.y)*0.03;
+camera.lookAt(0,0,0);
+renderer.render(scene,camera);
+}
+animate();
+window.addEventListener('resize',()=>{const w=canvas.clientWidth,h=canvas.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}catch(e){console.log('Hero Three.js failed');}
+}
+
+// ===== THREE.JS CERT GAME =====
+let certScene,certCamera,certRenderer,certParticles3D=[],certAnimId;
+function initCertGame(){
+try{
+if(typeof THREE==='undefined')return;
+const canvas=document.getElementById('cert-canvas');
+if(!canvas)return;
+certScene=new THREE.Scene();
+certCamera=new THREE.PerspectiveCamera(55,canvas.clientWidth/canvas.clientHeight,0.1,100);
+certCamera.position.set(0,0,12);
+certRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+certRenderer.setSize(canvas.clientWidth,canvas.clientHeight);
+certRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+certScene.add(new THREE.AmbientLight(0x0a1628,0.5));
+const pl=new THREE.PointLight(0x00f0c8,1.4,40);pl.position.set(0,0,6);certScene.add(pl);
+const qGeo=new THREE.IcosahedronGeometry(1.7,1);
+const qMat=new THREE.MeshPhongMaterial({color:0x00f0c8,emissive:0x003d2e,shininess:80,flatShading:true,transparent:true,opacity:0.9});
+const qMesh=new THREE.Mesh(qGeo,qMat);
+certScene.add(qMesh);
+for(let i=0;i<40;i++){
+const geo=new THREE.OctahedronGeometry(0.05,0);
+const mat=new THREE.MeshBasicMaterial({color:0x00f0c8,transparent:true,opacity:0.4});
+const mesh=new THREE.Mesh(geo,mat);
+const angle=(i/40)*Math.PI*2;
+const radius=3+Math.random()*2;
+mesh.position.set(Math.cos(angle)*radius,Math.sin(angle)*radius,(Math.random()-0.5)*3);
+certScene.add(mesh);
+certParticles3D.push({mesh,angle,radius,speed:Math.random()*0.2+0.08,axis:Math.random()});
+}
+let t=0;
+function animateCert(){
+certAnimId=requestAnimationFrame(animateCert);
+t+=0.012;
+qMesh.rotation.y+=0.01;
+qMesh.rotation.x=Math.sin(t)*0.1;
+qMesh.position.y=Math.sin(t*1.5)*0.4;
+qMesh.scale.setScalar(1+Math.sin(t*2)*0.04);
+certParticles3D.forEach(p=>{
+if(p.explode){p.mesh.position.add(p.velocity);p.mesh.rotation.x+=0.05;p.mesh.rotation.y+=0.05;return;}
+p.angle+=p.speed*0.01;
+p.mesh.position.x=Math.cos(p.angle)*p.radius;
+p.mesh.position.y=Math.sin(p.angle)*p.radius+Math.sin(t+p.axis)*0.6;
+p.mesh.rotation.x+=0.02;
+p.mesh.rotation.y+=0.02;
+});
+certRenderer.render(certScene,certCamera);
+}
+animateCert();
+window.addEventListener('resize',()=>{const w=canvas.clientWidth,h=canvas.clientHeight;certCamera.aspect=w/h;certCamera.updateProjectionMatrix();certRenderer.setSize(w,h);});
+}catch(e){console.log('Cert Three.js failed');}
+}
+
+function guessCert(num){
+const buttons=document.querySelectorAll('.cert-guess-btn');
+buttons.forEach(b=>{
+const n=parseInt(b.textContent);
+if(n===num&&n===6){
+b.classList.add('correct');
+fireConfetti();
+setTimeout(()=>showCertReveal(),500);
+}else if(n===num){
+b.classList.add('wrong');
+setTimeout(()=>b.classList.remove('wrong'),700);
+}
+});
+}
+
+function showCertReveal(){
+document.getElementById('cert-ui').classList.add('hidden');
+if(certScene){
+const qMesh=certScene.children.find(c=>c.geometry&&c.geometry.type==='IcosahedronGeometry');
+if(qMesh){
+for(let i=0;i<30;i++){
+const geo=new THREE.BoxGeometry(0.08,0.08,0.08);
+const colors=[0x00f0c8,0x00d4ff,0xa855f7,0xf59e0b,0xec4899,0x10b981];
+const mat=new THREE.MeshBasicMaterial({color:colors[i%6]});
+const mesh=new THREE.Mesh(geo,mat);
+mesh.position.copy(qMesh.position);
+mesh.userData.velocity=new THREE.Vector3((Math.random()-0.5)*0.4,(Math.random()-0.5)*0.4,(Math.random()-0.5)*0.4);
+certScene.add(mesh);
+certParticles3D.push({mesh,explode:true,velocity:mesh.userData.velocity});
+}
+certScene.remove(qMesh);
+}
+}
+setTimeout(()=>{
+document.getElementById('cert-reveal').classList.add('active');
+renderCertList();
+},400);
+}
+
+function resetCertGame(){
+document.getElementById('cert-reveal').classList.remove('active');
+document.getElementById('cert-ui').classList.remove('hidden');
+document.querySelectorAll('.cert-guess-btn').forEach(b=>b.classList.remove('correct','wrong'));
+if(!certScene)return;
+while(certScene.children.length>0)certScene.remove(certScene.children[0]);
+certParticles3D=[];
+const qGeo=new THREE.IcosahedronGeometry(1.7,1);
+const qMat=new THREE.MeshPhongMaterial({color:0x00f0c8,emissive:0x003d2e,shininess:80,flatShading:true,transparent:true,opacity:0.9});
+const qMesh=new THREE.Mesh(qGeo,qMat);
+certScene.add(qMesh);
+for(let i=0;i<40;i++){
+const geo=new THREE.OctahedronGeometry(0.05,0);
+const mat=new THREE.MeshBasicMaterial({color:0x00f0c8,transparent:true,opacity:0.4});
+const mesh=new THREE.Mesh(geo,mat);
+const angle=(i/40)*Math.PI*2;
+const radius=3+Math.random()*2;
+mesh.position.set(Math.cos(angle)*radius,Math.sin(angle)*radius,(Math.random()-0.5)*3);
+certScene.add(mesh);
+certParticles3D.push({mesh,angle,radius,speed:Math.random()*0.2+0.08,axis:Math.random()});
+}
+}
+
+// ===== CONFETTI =====
+function fireConfetti(){
+const canvas=document.getElementById('confetti-canvas');
+if(!canvas)return;
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+const pieces=[];
+const colors=['#00f0c8','#00d4ff','#a855f7','#f59e0b','#ec4899','#10b981'];
+for(let i=0;i<200;i++){
+pieces.push({
+x:canvas.width/2,y:canvas.height/2,
+vx:(Math.random()-0.5)*30,vy:(Math.random()-0.5)*30-10,
+gravity:0.35,rotation:Math.random()*360,rotSpeed:(Math.random()-0.5)*20,
+size:Math.random()*10+3,color:colors[Math.floor(Math.random()*colors.length)],
+opacity:1,drag:0.97,shape:Math.random()>0.5?'rect':'circle'
+});
+}
+let frame=0;
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+let active=false;
+pieces.forEach(p=>{
+if(p.opacity<=0)return;
+active=true;
+p.vx*=p.drag;p.vy*=p.drag;
+p.vy+=p.gravity;
+p.x+=p.vx;p.y+=p.vy;
+p.rotation+=p.rotSpeed;
+p.opacity-=0.006;
+ctx.save();
+ctx.translate(p.x,p.y);
+ctx.rotate(p.rotation*Math.PI/180);
+ctx.globalAlpha=p.opacity;
+ctx.fillStyle=p.color;
+if(p.shape==='circle'){ctx.beginPath();ctx.arc(0,0,p.size/2,0,Math.PI*2);ctx.fill();}
+else{ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);}
+ctx.restore();
+});
+frame++;
+if(active&&frame<300)requestAnimationFrame(draw);
+else ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+draw();
+}
+
+// ===== SCROLL OBSERVER =====
+function initScrollObserver(){
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.06,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.animate,.animate-left,.animate-scale').forEach(el=>observer.observe(el));
+}
+
+function dismissLoading(){document.getElementById('loading')?.classList.add('hidden');}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded',()=>{
+renderProjects();
+renderTimeline();
+renderSkills();
+initCursor();
+initMagnetic();
+initTiltCards();
+
+setTimeout(()=>{
+const el=document.getElementById('scramble-text');
+if(el)scrambleText(el,'Gavin Fogwe',700);
+},300);
+
+setTimeout(()=>{
+initHeroThree();
+initCertGame();
+},200);
+
+setTimeout(()=>animateCounters(),500);
+
+setTimeout(()=>{
+dismissLoading();
+initScrollObserver();
+},1600);
+
+window.addEventListener('scroll',()=>{handleNavScroll();updateNavActive();},{passive:true});
+});
+
+// ===== THREAT DEFENDER GAME =====
+let threatCanvas,threatCtx,threatGame=null,threatDefense='waf';
+const threatTypes=[{name:'Malware',color:'#ef4444',speed:1.2,hp:1,score:10},{name:'DDoS',color:'#f59e0b',speed:0.8,hp:2,score:20},{name:'Intrusion',color:'#a855f7',speed:1.5,hp:1,score:15},{name:'DataExfil',color:'#ec4899',speed:1.0,hp:3,score:30}];
+const defenseTypes={waf:{name:'WAF',color:'#00f0c8',range:120,damage:1,fireRate:800},shield:{name:'Shield',color:'#00d4ff',range:100,damage:2,fireRate:1200},guard:{name:'GuardDuty',color:'#a855f7',range:150,damage:1,fireRate:600}};
+
+function initThreatCanvas(){
+threatCanvas=document.getElementById('threat-canvas');
+if(!threatCanvas)return;
+threatCtx=threatCanvas.getContext('2d');
+resizeThreatCanvas();
+window.addEventListener('resize',resizeThreatCanvas);
+}
+function resizeThreatCanvas(){const wrap=threatCanvas.parentElement;threatCanvas.width=wrap.clientWidth;threatCanvas.height=wrap.clientHeight;}
+
+function selectDefense(type){threatDefense=type;document.querySelectorAll('.threat-control-btn').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+type)?.classList.add('active');}
+
+function startThreatGame(){
+if(!threatCanvas){initThreatCanvas();}
+document.getElementById('threat-start').classList.add('hidden');
+document.getElementById('threat-overlay').classList.remove('active');
+threatGame={threats:[],defenses:[],projectiles:[],particles:[],score:0,wave:1,lives:5,spawnTimer:0,spawnInterval:120,gameOver:false,lastTime:0};
+requestAnimationFrame(threatLoop);
+}
+
+function threatLoop(timestamp){
+if(!threatGame)return;
+if(threatGame.gameOver)return;
+const dt=timestamp-threatGame.lastTime;
+threatGame.lastTime=timestamp;
+
+// Spawn threats
+threatGame.spawnTimer++;
+if(threatGame.spawnTimer>=threatGame.spawnInterval){
+threatGame.spawnTimer=0;
+const type=threatTypes[Math.floor(Math.random()*threatTypes.length)];
+threatGame.threats.push({
+x:threatCanvas.width+30,y:Math.random()*(threatCanvas.height-100)+50,
+...type,vx:-type.speed,flash:0
+});
+// Increase difficulty
+if(threatGame.score>100)threatGame.spawnInterval=100;
+if(threatGame.score>300)threatGame.spawnInterval=80;
+if(threatGame.score>500)threatGame.spawnInterval=60;
+}
+
+// Update threats
+threatGame.threats.forEach((t,i)=>{
+t.x+=t.vx;
+t.flash=Math.max(0,t.flash-0.05);
+if(t.x<-30){
+threatGame.threats.splice(i,1);
+threatGame.lives--;
+if(threatGame.lives<=0)endThreatGame();
+}
+});
+
+// Update defenses and shooting
+threatGame.defenses.forEach(d=>{
+d.cooldown=Math.max(0,d.cooldown-16);
+if(d.cooldown<=0){
+// Find nearest threat in range
+let nearest=null;let minDist=Infinity;
+threatGame.threats.forEach(t=>{
+const dx=t.x-d.x;const dy=t.y-d.y;const dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<defenseTypes[d.type].range&&dist<minDist){minDist=dist;nearest=t;}
+});
+if(nearest){
+const def=defenseTypes[d.type];
+threatGame.projectiles.push({x:d.x,y:d.y,target:nearest,damage:def.damage,color:def.color,speed:6});
+d.cooldown=def.fireRate;
+}
+}
+});
+
+// Update projectiles
+threatGame.projectiles.forEach((p,i)=>{
+if(!p.target||threatGame.threats.indexOf(p.target)===-1){threatGame.projectiles.splice(i,1);return;}
+const dx=p.target.x-p.x;const dy=p.target.y-p.y;const dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<15){
+p.target.hp-=p.damage;
+p.target.flash=1;
+if(p.target.hp<=0){
+// Explosion particles
+for(let k=0;k<8;k++){
+threatGame.particles.push({x:p.target.x,y:p.target.y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:1,color:p.target.color,size:Math.random()*4+2});
+}
+threatGame.score+=p.target.score;
+threatGame.threats.splice(threatGame.threats.indexOf(p.target),1);
+}
+threatGame.projectiles.splice(i,1);
+}else{
+p.x+=(dx/dist)*p.speed;
+p.y+=(dy/dist)*p.speed;
+}
+});
+
+// Update particles
+threatGame.particles.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.03;if(p.life<=0)threatGame.particles.splice(i,1);});
+
+// Update HUD
+document.getElementById('threat-score').innerText=threatGame.score;
+document.getElementById('threat-wave').innerText=threatGame.wave;
+document.getElementById('threat-lives').innerText=threatGame.lives;
+
+// Draw
+threatCtx.fillStyle='#02040a';
+threatCtx.fillRect(0,0,threatCanvas.width,threatCanvas.height);
+
+// Draw database (target)
+threatCtx.save();
+threatCtx.translate(40,threatCanvas.height/2);
+// Glow
+const grad=threatCtx.createRadialGradient(0,0,10,0,0,40);
+grad.addColorStop(0,'rgba(0,240,200,0.3)');grad.addColorStop(1,'rgba(0,240,200,0)');
+threatCtx.fillStyle=grad;threatCtx.fillRect(-40,-40,80,80);
+// Cylinder shape
+threatCtx.fillStyle='#0a1628';threatCtx.strokeStyle='#00f0c8';threatCtx.lineWidth=2;
+threatCtx.beginPath();threatCtx.ellipse(0,-15,20,8,0,0,Math.PI*2);threatCtx.fill();threatCtx.stroke();
+threatCtx.fillRect(-20,-15,40,30);
+threatCtx.beginPath();threatCtx.ellipse(0,15,20,8,0,0,Math.PI*2);threatCtx.fill();threatCtx.stroke();
+threatCtx.strokeRect(-20,-15,40,30);
+threatCtx.fillStyle='#00f0c8';threatCtx.font='10px Space Grotesk';threatCtx.textAlign='center';
+threatCtx.fillText('RDS',0,5);
+threatCtx.restore();
+
+// Draw defenses
+threatGame.defenses.forEach(d=>{
+const def=defenseTypes[d.type];
+// Range indicator (subtle)
+threatCtx.beginPath();threatCtx.arc(d.x,d.y,def.range,0,Math.PI*2);
+threatCtx.strokeStyle=def.color;threatCtx.globalAlpha=0.05;threatCtx.lineWidth=1;threatCtx.stroke();threatCtx.globalAlpha=1;
+// Defense icon
+threatCtx.fillStyle=def.color;threatCtx.globalAlpha=0.15;
+threatCtx.beginPath();threatCtx.arc(d.x,d.y,18,0,Math.PI*2);threatCtx.fill();
+threatCtx.globalAlpha=1;
+threatCtx.strokeStyle=def.color;threatCtx.lineWidth=2;
+threatCtx.beginPath();threatCtx.arc(d.x,d.y,18,0,Math.PI*2);threatCtx.stroke();
+// Shield icon
+threatCtx.fillStyle=def.color;threatCtx.font='12px sans-serif';threatCtx.textAlign='center';threatCtx.textBaseline='middle';
+threatCtx.fillText(d.type==='waf'?'W':d.type==='shield'?'S':'G',d.x,d.y);
+});
+
+// Draw threats
+threatGame.threats.forEach(t=>{
+threatCtx.save();
+threatCtx.translate(t.x,t.y);
+if(t.flash>0){threatCtx.globalAlpha=0.5+Math.sin(t.flash*10)*0.5;}
+// Threat shape
+threatCtx.fillStyle=t.color;
+threatCtx.beginPath();
+if(t.name==='Malware'){threatCtx.arc(0,0,12,0,Math.PI*2);}
+else if(t.name==='DDoS'){threatCtx.moveTo(0,-14);threatCtx.lineTo(12,7);threatCtx.lineTo(-12,7);threatCtx.closePath();}
+else if(t.name==='Intrusion'){threatCtx.rect(-10,-10,20,20);}
+else{threatCtx.moveTo(0,-12);threatCtx.lineTo(10,0);threatCtx.lineTo(0,12);threatCtx.lineTo(-10,0);threatCtx.closePath();}
+threatCtx.fill();
+// Glow
+threatCtx.shadowColor=t.color;threatCtx.shadowBlur=15;
+threatCtx.strokeStyle=t.color;threatCtx.lineWidth=1;threatCtx.stroke();
+threatCtx.shadowBlur=0;
+threatCtx.globalAlpha=1;
+// HP bar
+if(t.hp>1){
+threatCtx.fillStyle='#333';threatCtx.fillRect(-12,-20,24,3);
+threatCtx.fillStyle=t.color;threatCtx.fillRect(-12,-20,24*(t.hp/threatTypes.find(tt=>tt.name===t.name).hp),3);
+}
+threatCtx.restore();
+});
+
+// Draw projectiles
+threatGame.projectiles.forEach(p=>{
+threatCtx.save();
+threatCtx.translate(p.x,p.y);
+threatCtx.fillStyle=p.color;
+threatCtx.shadowColor=p.color;threatCtx.shadowBlur=10;
+threatCtx.beginPath();threatCtx.arc(0,0,4,0,Math.PI*2);threatCtx.fill();
+threatCtx.shadowBlur=0;
+threatCtx.restore();
+});
+
+// Draw particles
+threatGame.particles.forEach(p=>{
+threatCtx.globalAlpha=p.life;
+threatCtx.fillStyle=p.color;
+threatCtx.fillRect(p.x-p.size/2,p.y-p.size/2,p.size,p.size);
+});
+threatCtx.globalAlpha=1;
+
+requestAnimationFrame(threatLoop);
+}
+
+function endThreatGame(){
+if(!threatGame)return;
+threatGame.gameOver=true;
+document.getElementById('threat-final').innerText=threatGame.score;
+document.getElementById('threat-overlay').classList.add('active');
+}
+
+// Click to place defense
+function threatCanvasClick(e){
+if(!threatGame||threatGame.gameOver)return;
+const rect=threatCanvas.getBoundingClientRect();
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+// Don't place too close to edges or database
+if(x<80||x>threatCanvas.width-30||y<30||y>threatCanvas.height-30)return;
+threatGame.defenses.push({x,y,type:threatDefense,cooldown:0});
+// Place effect
+for(let i=0;i<6;i++){
+threatGame.particles.push({x,y,vx:(Math.random()-0.5)*3,vy:(Math.random()-0.5)*3,life:1,color:defenseTypes[threatDefense].color,size:3});
+}
+}
+
+// ===== STACK ARCHITECT GAME =====
+let stackCanvas,stackCtx,stackGame=null;
+const stackBlocks=[
+{name:'VPC',color:'#00f0c8',width:120,height:30},
+{name:'EC2',color:'#00d4ff',width:100,height:30},
+{name:'RDS',color:'#a855f7',width:90,height:30},
+{name:'S3',color:'#f59e0b',width:110,height:30},
+{name:'Lambda',color:'#ec4899',width:80,height:25},
+{name:'ALB',color:'#10b981',width:130,height:25},
+{name:'CloudFront',color:'#3b82f6',width:100,height:25},
+{name:'EKS',color:'#f97316',width:95,height:30}
+];
+
+function initStackCanvas(){
+stackCanvas=document.getElementById('stack-canvas');
+if(!stackCanvas)return;
+stackCtx=stackCanvas.getContext('2d');
+resizeStackCanvas();
+window.addEventListener('resize',resizeStackCanvas);
+}
+function resizeStackCanvas(){const wrap=stackCanvas.parentElement;stackCanvas.width=wrap.clientWidth;stackCanvas.height=wrap.clientHeight;}
+
+function startStackGame(){
+if(!stackCanvas){initStackCanvas();}
+document.getElementById('stack-start').classList.add('hidden');
+document.getElementById('stack-overlay').classList.remove('active');
+const block=stackBlocks[Math.floor(Math.random()*stackBlocks.length)];
+stackGame={
+blocks:[],currentBlock:{x:stackCanvas.width/2-60,y:50,vx:3,vy:0,width:block.width,height:block.height,color:block.color,name:block.name,placed:false},
+score:0,best:parseInt(localStorage.getItem('stackBest')||'0'),gameOver:false,gravity:0.3,cameraY:0
+};
+document.getElementById('stack-best').innerText=stackGame.best;
+document.getElementById('stack-next').innerHTML='Next: <strong style="color:'+block.color+'">'+block.name+'</strong>';
+requestAnimationFrame(stackLoop);
+}
+
+function stackLoop(){
+if(!stackGame||stackGame.gameOver)return;
+const sg=stackGame;
+
+// Move current block
+if(!sg.currentBlock.placed){
+sg.currentBlock.x+=sg.currentBlock.vx;
+if(sg.currentBlock.x+sg.currentBlock.width>stackCanvas.width-20||sg.currentBlock.x<20)sg.currentBlock.vx*=-1;
+}
+
+// Gravity for placed blocks
+sg.blocks.forEach(b=>{if(b.vy!==undefined){b.y+=b.vy;b.vy+=sg.gravity;if(b.y+b.height>stackCanvas.height-20){b.y=stackCanvas.height-20-b.height;b.vy=0;b.resting=true;}}});
+
+// Check collapse
+sg.blocks.forEach((b,i)=>{
+if(!b.resting&&b.vy===undefined)return;
+// Check if block fell off
+if(b.x+b.width<0||b.x>stackCanvas.width){endStackGame();return;}
+// Check support from below
+let supported=false;
+if(b.y+b.height>=stackCanvas.height-22){supported=true;}
+sg.blocks.forEach((other,j)=>{
+if(i===j)return;
+if(Math.abs(b.y+b.height-other.y)<5&&b.x<other.x+other.width&&b.x+b.width>other.x){supported=true;}
+});
+if(!supported&&b.y<stackCanvas.height-50){b.vy=b.vy||0;b.vy+=sg.gravity;b.y+=b.vy;}
+});
+
+// Camera follow
+const topBlock=sg.blocks.length>0?Math.min(...sg.blocks.map(b=>b.y)):stackCanvas.height;
+const targetCam=Math.max(0,stackCanvas.height-topBlock-300);
+sg.cameraY+=(targetCam-sg.cameraY)*0.05;
+
+// Draw
+stackCtx.fillStyle='#02040a';
+stackCtx.fillRect(0,0,stackCanvas.width,stackCanvas.height);
+
+// Grid lines
+stackCtx.strokeStyle='rgba(0,240,200,0.03)';
+stackCtx.lineWidth=1;
+for(let i=0;i<stackCanvas.width;i+=40){stackCtx.beginPath();stackCtx.moveTo(i,0);stackCtx.lineTo(i,stackCanvas.height);stackCtx.stroke();}
+for(let i=0;i<stackCanvas.height;i+=40){stackCtx.beginPath();stackCtx.moveTo(0,i);stackCtx.lineTo(stackCanvas.width,i);stackCtx.stroke();}
+
+stackCtx.save();
+stackCtx.translate(0,sg.cameraY);
+
+// Draw placed blocks
+sg.blocks.forEach(b=>{
+// Glow
+const grad=stackCtx.createLinearGradient(b.x,b.y,b.x,b.y+b.height);
+grad.addColorStop(0,b.color+'40');grad.addColorStop(1,b.color+'10');
+stackCtx.fillStyle=grad;
+stackCtx.fillRect(b.x-2,b.y-2,b.width+4,b.height+4);
+// Block
+stackCtx.fillStyle=b.color+'20';
+stackCtx.strokeStyle=b.color;stackCtx.lineWidth=1.5;
+stackCtx.fillRect(b.x,b.y,b.width,b.height);
+stackCtx.strokeRect(b.x,b.y,b.width,b.height);
+// Label
+stackCtx.fillStyle=b.color;stackCtx.font='11px Space Grotesk';stackCtx.textAlign='center';stackCtx.textBaseline='middle';
+stackCtx.fillText(b.name,b.x+b.width/2,b.y+b.height/2);
+});
+
+// Draw current block
+if(!sg.currentBlock.placed){
+const cb=sg.currentBlock;
+stackCtx.fillStyle=cb.color+'30';
+stackCtx.strokeStyle=cb.color;stackCtx.lineWidth=2;
+stackCtx.setLineDash([5,5]);
+stackCtx.strokeRect(cb.x,cb.y,cb.width,cb.height);
+stackCtx.setLineDash([]);
+stackCtx.fillRect(cb.x,cb.y,cb.width,cb.height);
+stackCtx.fillStyle=cb.color;stackCtx.font='12px Space Grotesk';stackCtx.textAlign='center';
+stackCtx.fillText(cb.name,cb.x+cb.width/2,cb.y+cb.height/2);
+// Guide line
+stackCtx.strokeStyle=cb.color;stackCtx.globalAlpha=0.2;
+stackCtx.beginPath();stackCtx.moveTo(cb.x+cb.width/2,cb.y+cb.height);stackCtx.lineTo(cb.x+cb.width/2,stackCanvas.height);stackCtx.stroke();
+stackCtx.globalAlpha=1;
+}
+
+stackCtx.restore();
+
+// Ground line
+stackCtx.strokeStyle='rgba(0,240,200,0.2)';stackCtx.lineWidth=2;
+stackCtx.beginPath();stackCtx.moveTo(20,stackCanvas.height-20);stackCtx.lineTo(stackCanvas.width-20,stackCanvas.height-20);stackCtx.stroke();
+
+requestAnimationFrame(stackLoop);
+}
+
+function dropStackBlock(){
+if(!stackGame||stackGame.gameOver||stackGame.currentBlock.placed)return;
+const cb=stackGame.currentBlock;
+cb.placed=true;
+cb.vy=0;
+stackGame.blocks.push({...cb});
+stackGame.score++;
+document.getElementById('stack-height').innerText=stackGame.score;
+
+// New block
+const block=stackBlocks[Math.floor(Math.random()*stackBlocks.length)];
+stackGame.currentBlock={
+x:stackCanvas.width/2-block.width/2,y:50+stackGame.cameraY,vx:2+stackGame.score*0.15,vy:0,
+width:block.width,height:block.height,color:block.color,name:block.name,placed:false
+};
+document.getElementById('stack-next').innerHTML='Next: <strong style="color:'+block.color+'">'+block.name+'</strong>';
+}
+
+function endStackGame(){
+if(!stackGame)return;
+stackGame.gameOver=true;
+if(stackGame.score>stackGame.best){
+localStorage.setItem('stackBest',stackGame.score);
+}
+document.getElementById('stack-final').innerText=stackGame.score;
+document.getElementById('stack-best').innerText=Math.max(stackGame.best,stackGame.score);
+document.getElementById('stack-overlay').classList.add('active');
+}
+
+// Event listeners for games
+document.addEventListener('DOMContentLoaded',()=>{
+initThreatCanvas();
+initStackCanvas();
+
+// Threat canvas click
+const tCanvas=document.getElementById('threat-canvas');
+if(tCanvas)tCanvas.addEventListener('click',threatCanvasClick);
+
+// Stack canvas click
+const sCanvas=document.getElementById('stack-canvas');
+if(sCanvas)sCanvas.addEventListener('click',dropStackBlock);
+});
+</script>
+</body>
 </html>
